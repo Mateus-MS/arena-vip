@@ -26,7 +26,11 @@ templ Location() {
 					<div class="space-y-8">
 						<!-- Map -->
 						<div class="aspect-video border border-edge relative overflow-hidden">
-							<div id="arena-map" data-address={ config.MapsAddress() } class="w-full h-full"></div>
+							if config.MapsAPIKey() != "" {
+								<div id="arena-map" data-address={ config.MapsAddress() } class="w-full h-full"></div>
+							} else {
+								@mapFallback()
+							}
 						</div>
 						<!-- Address details -->
 						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -70,7 +74,24 @@ templ Location() {
 			</div>
 		}
 	}
-	@mapScript()
+	if config.MapsAPIKey() != "" {
+		@mapScript()
+	}
+}
+
+templ mapFallback() {
+	<a
+		href={ templ.SafeURL("https://www.google.com/maps/search/?api=1&query=" + config.MapsAddress()) }
+		target="_blank"
+		rel="noopener noreferrer"
+		class="flex flex-col items-center justify-center w-full h-full bg-surface gap-4 group"
+	>
+		<svg class="w-8 h-8 text-gold/40 group-hover:text-gold/70 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+		</svg>
+		<span class="font-accent text-xs tracking-[0.2em] uppercase text-muted group-hover:text-gold/70 transition-colors">Ver no Google Maps</span>
+	</a>
 }
 
 templ mapScript() {

@@ -1,0 +1,13 @@
+name: arena-vip
+
+services:
+  website:
+    image: arena-vip
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8085:8080"
+    env_file:
+      - ../.env
+    restart: unless-stopped
