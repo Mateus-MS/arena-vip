@@ -1,0 +1,108 @@
+package privacidade
+
+import (
+	"arena-vip/app"
+	"arena-vip/atoms"
+	"arena-vip/components"
+	"arena-vip/templates"
+	"arena-vip/utils"
+)
+
+func init() {
+	app.GetInstance().Router.GET("/privacidade", utils.Render(Page()))
+}
+
+templ Page() {
+	@templates.Base(
+		"Política de Privacidade — Arena VIP",
+		"Como a Arena VIP recolhe, utiliza e protege os seus dados pessoais, em conformidade com o RGPD.",
+	) {
+		@components.Navbar(false)
+		<main>
+			<!-- Header -->
+			@atoms.Section("privacidade-header") {
+				@atoms.Container() {
+					<div class="pt-12 space-y-4">
+						<p class="section-label">Legal</p>
+						<h1 class="font-display text-6xl md:text-7xl lg:text-8xl leading-none tracking-tight text-ink uppercase">
+							Política de <span class="text-gold">Privacidade</span>
+						</h1>
+						<p class="text-muted text-base font-body max-w-xl leading-relaxed pt-2">
+							Última atualização: junho de 2025
+						</p>
+					</div>
+				}
+			}
+			@atoms.DividerGold()
+			<!-- Content -->
+			@atoms.Section("privacidade-content") {
+				@atoms.Container() {
+					<div class="max-w-3xl space-y-12">
+						@policySection("1. Quem somos") {
+							<p>A <strong>Arena VIP</strong> é uma academia de artes marciais sediada em R. Indústria 547, 4780‑481 Santo Tirso, Portugal. Para efeitos do Regulamento Geral sobre a Proteção de Dados (RGPD), somos o responsável pelo tratamento dos seus dados pessoais.</p>
+							<p>Para questões relacionadas com a sua privacidade, pode contactar‑nos através do formulário de contacto disponível no website ou por telefone: <a href="tel:+351934551015" class="text-accent hover:underline">+351 934 551 015</a>.</p>
+						}
+						@policySection("2. Dados que recolhemos") {
+							<p>Quando preenche o formulário de contacto do nosso website, recolhemos os seguintes dados pessoais:</p>
+							<ul>
+								<li><strong>Nome completo</strong></li>
+								<li><strong>Número de telefone</strong></li>
+								<li><strong>Endereço de email</strong></li>
+								<li><strong>Modalidade de interesse</strong> (Brazilian Jiu‑Jitsu, Kickboxing, Judô ou Turma Kids)</li>
+								<li><strong>Mensagem livre</strong>, que pode conter informações adicionais que decida partilhar</li>
+							</ul>
+							<p>Não recolhemos dados sensíveis (saúde, origem étnica, etc.) nem dados de menores sem consentimento parental.</p>
+						}
+						@policySection("3. Finalidade e base legal") {
+							<p>Os seus dados são utilizados exclusivamente para <strong>responder ao seu pedido de agendamento de aula experimental</strong> e entrar em contacto consigo para confirmar a marcação.</p>
+							<p>A base legal para este tratamento é o <strong>consentimento</strong> (Artigo 6.º, n.º 1, alínea a) do RGPD), que presta ao submeter o formulário. Pode retirar o seu consentimento a qualquer momento, contactando‑nos pelos meios indicados acima.</p>
+						}
+						@policySection("4. Conservação dos dados") {
+							<p>Os seus dados são conservados apenas pelo tempo necessário para tratar o seu pedido. Caso não se torne aluno, os dados são eliminados no prazo de <strong>30 dias</strong> após o último contacto. Caso se torne aluno, os dados passam a fazer parte do seu processo de aluno, regido por contrato.</p>
+						}
+						@policySection("5. Partilha de dados") {
+							<p>Os seus dados <strong>não são vendidos, alugados nem partilhados com terceiros</strong> para fins comerciais.</p>
+							<p>A submissão do formulário resulta no envio de um email para a nossa caixa de correio através do serviço <strong>Gmail (Google LLC)</strong>, que atua como subcontratante e processa os dados de acordo com as suas próprias políticas de privacidade e com as cláusulas contratuais-tipo da UE.</p>
+						}
+						@policySection("6. Os seus direitos") {
+							<p>Ao abrigo do RGPD, tem os seguintes direitos relativamente aos seus dados pessoais:</p>
+							<ul>
+								<li><strong>Acesso</strong> — saber quais os dados que guardamos sobre si</li>
+								<li><strong>Retificação</strong> — corrigir dados incorretos ou incompletos</li>
+								<li><strong>Apagamento</strong> — solicitar a eliminação dos seus dados ("direito a ser esquecido")</li>
+								<li><strong>Limitação</strong> — restringir o tratamento em determinadas circunstâncias</li>
+								<li><strong>Oposição</strong> — opor‑se ao tratamento baseado nos nossos interesses legítimos</li>
+								<li><strong>Portabilidade</strong> — receber os seus dados num formato estruturado e legível por máquina</li>
+							</ul>
+							<p>Para exercer qualquer um destes direitos, contacte‑nos pelo formulário de contacto ou pelo telefone indicado na secção 1. Responderemos no prazo máximo de <strong>30 dias</strong>.</p>
+						}
+						@policySection("7. Direito de reclamação") {
+							<p>Se considerar que o tratamento dos seus dados viola o RGPD, tem o direito de apresentar reclamação à autoridade de controlo competente em Portugal:</p>
+							<p>
+								<strong>Comissão Nacional de Proteção de Dados (CNPD)</strong><br/>
+								Rua de São Bento, 148‑3.º, 1200‑821 Lisboa<br/>
+								<a href="https://www.cnpd.pt" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">www.cnpd.pt</a>
+							</p>
+						}
+						@policySection("8. Alterações a esta política") {
+							<p>Podemos atualizar esta política ocasionalmente para refletir alterações nas nossas práticas ou na legislação aplicável. A data de última atualização encontra‑se no topo desta página. Recomendamos que a consulte periodicamente.</p>
+						}
+					</div>
+				}
+			}
+		</main>
+		@components.Footer()
+	}
+}
+
+templ policySection(title string) {
+	<div class="space-y-4">
+		<div class="flex items-center gap-3">
+			<div class="w-1 h-6 bg-gold flex-shrink-0"></div>
+			<h2 class="font-accent text-lg font-semibold tracking-wide text-ink uppercase">{ title }</h2>
+		</div>
+		<div class="pl-4 border-l border-edge space-y-3 font-body text-sm text-ink/70 leading-relaxed [&_strong]:text-ink [&_strong]:font-semibold [&_ul]:space-y-2 [&_ul]:list-none [&_ul]:pl-0 [&_li]:flex [&_li]:gap-2 [&_li]:before:content-['—'] [&_li]:before:text-gold [&_li]:before:flex-shrink-0">
+			{ children... }
+		</div>
+	</div>
+}

@@ -1,0 +1,52 @@
+package loja
+
+import (
+	"arena-vip/app"
+	"arena-vip/app/config"
+	"arena-vip/atoms"
+	"arena-vip/components"
+	"arena-vip/pages/loja/frags"
+	"arena-vip/templates"
+	"arena-vip/utils"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+func init() {
+	app.GetInstance().Router.GET("/loja", func(c *gin.Context) {
+		if !config.ShopEnabled() {
+			c.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+		utils.Render(Page())(c)
+	})
+}
+
+templ Page() {
+	@templates.Base(
+		"Loja — Arena VIP",
+		"Equipamentos de alto nível para artes marciais. Kimonos, No-Gi, cinturões, proteção e acessórios Arena VIP.",
+	) {
+		@components.Navbar(false)
+		<main>
+			@atoms.Section("loja-header") {
+				@atoms.Container() {
+					<div class="pt-12 space-y-4">
+						<p class="section-label">Equipamentos</p>
+						<h1 class="font-display text-6xl md:text-7xl lg:text-8xl leading-none tracking-tight text-ink uppercase">
+							Loja <span class="text-gold">Arena VIP</span>
+						</h1>
+						<p class="text-muted text-base font-body max-w-xl leading-relaxed pt-2">
+							Equipamentos selecionados para quem leva o treino a sério. Qualidade profissional para atletas de todos os níveis.
+						</p>
+					</div>
+				}
+			}
+			@atoms.DividerGold()
+			@frags.Shop()
+			@components.Contact()
+		</main>
+		@components.Footer()
+	}
+}

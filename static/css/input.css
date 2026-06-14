@@ -1,0 +1,104 @@
+/* ─── THEME VARIABLES ───────────────────────────────────────────────
+   Change only this block to reskin the entire site.
+   Values are bare RGB channels so Tailwind opacity modifiers work:
+   e.g.  text-accent/50  →  rgb(var(--accent) / 0.5)
+──────────────────────────────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --canvas:   255 255 255;   /* main bg — white            */
+  --surface:  245 245 245;   /* alt section bg — off-white */
+  --contrast: 8   8   8;     /* dark section bg — near-black */
+
+  /* Text */
+  --ink:      10  10  10;    /* primary text on light bg   */
+  --muted:    107 114 128;   /* secondary text on light bg */
+  --subtle:   156 163 175;   /* tertiary / placeholder      */
+
+  /* Borders on light backgrounds */
+  --edge:     226 232 240;   /* default border — slate-200  */
+
+  /* Brand accents */
+  --accent:   190 18  40;    /* red — BJJ belt tip          */
+  --gold:     201 168 76;    /* gold — premium detail       */
+}
+
+/* ─── Alpine.js ──────────────────────────────────────────────────── */
+[x-cloak] { display: none !important; }
+
+/* ─── Base ───────────────────────────────────────────────────────── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: rgb(var(--canvas));
+    color: rgb(var(--ink));
+  }
+
+  ::selection {
+    background-color: rgb(var(--accent));
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Section label — "—— LABEL TEXT" */
+  .section-label {
+    @apply inline-flex items-center gap-2 text-gold text-xs font-accent font-semibold tracking-[0.2em] uppercase;
+  }
+  .section-label::before {
+    content: '';
+    @apply block w-6 h-px bg-gold;
+  }
+
+  /* Corner-bracket card decoration */
+  .card-corner { @apply relative; }
+  .card-corner::before,
+  .card-corner::after {
+    content: '';
+    @apply absolute w-4 h-4;
+    border-color: rgb(var(--accent) / 0.25);
+  }
+  .card-corner::before { @apply top-0 left-0 border-t border-l; }
+  .card-corner::after  { @apply bottom-0 right-0 border-b border-r; }
+
+  /* Same brackets but for dark-bg cards */
+  .card-corner-dark::before,
+  .card-corner-dark::after {
+    content: '';
+    @apply absolute w-4 h-4;
+    border-color: rgb(var(--gold) / 0.4);
+  }
+  .card-corner-dark::before { @apply top-0 left-0 border-t border-l; }
+  .card-corner-dark::after  { @apply bottom-0 right-0 border-b border-r; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+
+  /* Subtle dot-grid hero background */
+  .hero-grid {
+    background-image:
+      linear-gradient(rgb(var(--gold) / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--gold) / 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+}
+
+/* ─── SVG ring animations (hero graphic) ────────────────────────── */
+@keyframes ring-spin         { to { transform: rotate(360deg);  } }
+@keyframes ring-spin-reverse { to { transform: rotate(-360deg); } }
+
+.ring-spin         { transform-origin: 250px 250px; animation: ring-spin         22s linear infinite; }
+.ring-spin-reverse { transform-origin: 250px 250px; animation: ring-spin-reverse 16s linear infinite; }
+
+/* ─── Staggered animation delays ────────────────────────────────── */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-700 { animation-delay: 0.7s; }

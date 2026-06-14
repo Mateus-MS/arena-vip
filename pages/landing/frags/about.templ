@@ -1,0 +1,86 @@
+package frags
+
+import "arena-vip/atoms"
+
+type Value struct {
+	Icon  string
+	Title string
+	Desc  string
+}
+
+var values = []Value{
+	{Title: "Disciplina", Desc: "A base de tudo. Cultivamos a mentalidade de quem sabe que o progresso é diário e constante."},
+	{Title: "Excelência", Desc: "Não aceitamos mediocridade. Cada aula, cada detalhe técnico é tratado com máximo cuidado."},
+	{Title: "Respeito", Desc: "No tatame e fora dele. Respeitamos o tempo, a jornada e a individualidade de cada aluno."},
+	{Title: "Comunidade", Desc: "Mais do que uma academia, somos uma família que cresce e evolui junto."},
+}
+
+templ About() {
+	@atoms.SectionAlt("sobre") {
+		@atoms.Container() {
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+				<!-- Left: Visual -->
+				<div class="relative">
+					<div class="relative aspect-square max-w-md mx-auto lg:mx-0">
+						<!-- Main frame -->
+						<div class="absolute inset-0 bg-surface border border-edge">
+							<div class="absolute inset-0 flex items-center justify-center">
+								<div class="text-center space-y-4">
+									<div class="font-display text-[120px] text-gold/10 leading-none">10</div>
+									<div class="font-display text-2xl text-ink/15 tracking-widest uppercase">Anos</div>
+								</div>
+							</div>
+							<!-- Gold corner accents -->
+							<div class="absolute top-0 left-0 w-16 h-16">
+								<div class="absolute top-4 left-0 w-12 h-px bg-gold/50"></div>
+								<div class="absolute top-0 left-4 w-px h-12 bg-gold/50"></div>
+							</div>
+							<div class="absolute bottom-0 right-0 w-16 h-16">
+								<div class="absolute bottom-4 right-0 w-12 h-px bg-gold/50"></div>
+								<div class="absolute bottom-0 right-4 w-px h-12 bg-gold/50"></div>
+							</div>
+						</div>
+						<!-- Floating stats cards -->
+						<div class="absolute -bottom-6 -right-6 bg-contrast border border-gold/30 p-5 z-10">
+							<div class="font-display text-3xl text-gold leading-none">2014</div>
+							<div class="text-xs font-accent tracking-widest uppercase text-white/40 mt-1">Fundada em</div>
+						</div>
+						<div class="absolute -top-6 -left-6 bg-contrast border border-white/10 p-5 z-10">
+							<div class="font-display text-3xl text-white leading-none">500+</div>
+							<div class="text-xs font-accent tracking-widest uppercase text-white/40 mt-1">Alunos formados</div>
+						</div>
+					</div>
+				</div>
+				<!-- Right: Text -->
+				<div class="space-y-10">
+					<div class="space-y-6">
+						@atoms.SectionTitle("Nossa História", "Sobre a", "Arena VIP", false)
+						<p class="text-ink/65 text-sm font-body leading-relaxed">
+							Fundada em 2014, a Arena VIP nasceu da paixão pelas artes marciais e da visão de criar um ambiente onde qualquer pessoa pudesse alcançar seu máximo potencial. Hoje somos referência no estado — mais de 500 alunos formados, 4 faixas pretas e um time que compete e vence no Brasil inteiro.
+						</p>
+						<a href="/sobre" class="inline-flex items-center gap-2 text-xs font-accent font-semibold tracking-widest uppercase text-gold hover:gap-4 transition-all duration-200">
+							Conheça nossa história
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+							</svg>
+						</a>
+					</div>
+					<!-- Values grid -->
+					<div class="grid grid-cols-2 gap-4">
+						for _, v := range values {
+							@valueCard(v)
+						}
+					</div>
+				</div>
+			</div>
+		}
+	}
+}
+
+templ valueCard(v Value) {
+	<div class="p-5 border border-edge hover:border-accent/20 transition-colors duration-300 group">
+		<div class="w-6 h-px bg-gold mb-3 group-hover:w-10 transition-all duration-300"></div>
+		<div class="font-display text-lg text-ink uppercase tracking-wide mb-1">{ v.Title }</div>
+		<div class="text-xs text-muted font-body leading-relaxed">{ v.Desc }</div>
+	</div>
+}

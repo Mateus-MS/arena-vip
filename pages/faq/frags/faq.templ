@@ -1,0 +1,109 @@
+package frags
+
+import (
+	"arena-vip/atoms"
+	"fmt"
+)
+
+type FAQItem struct {
+	Question string
+	Answer   string
+}
+
+var faqItems = []FAQItem{
+	{
+		Question: "Preciso ter experiência prévia em artes marciais para começar?",
+		Answer:   "Não! Todos os nossos programas possuem turmas para iniciantes absolutos. Nossa metodologia foi desenvolvida para receber alunos sem nenhuma experiência anterior. O único requisito é vontade de aprender.",
+	},
+	{
+		Question: "Qual é a faixa etária atendida pela academia?",
+		Answer:   "Atendemos desde os 4 anos de idade até adultos acima de 60 anos. Temos turmas separadas por faixa etária e nível, garantindo que o treinamento seja sempre adequado ao perfil de cada aluno.",
+	},
+	{
+		Question: "Posso experimentar antes de me matricular?",
+		Answer:   "Sim! Oferecemos uma aula experimental gratuita em qualquer modalidade. Você pode vir conhecer a academia, conversar com os professores e sentir o ambiente antes de tomar qualquer decisão.",
+	},
+	{
+		Question: "Quais são os horários das aulas?",
+		Answer:   "Temos aulas de segunda a sexta das 6h às 22h, sábados das 7h às 18h e domingos das 8h às 12h, com múltiplos horários em cada período. Consulte nossa grade completa para encontrar o horário ideal para sua rotina.",
+	},
+	{
+		Question: "A academia tem estrutura para crianças?",
+		Answer:   "Sim! Temos área exclusiva para kids com tatames infantis, instrutores especializados em pedagogia esportiva e turmas separadas por idade. O programa infantil desenvolve disciplina, coordenação e autoconfiança.",
+	},
+	{
+		Question: "Preciso comprar algum equipamento para começar?",
+		Answer:   "Para a primeira aula experimental, não é necessário nenhum equipamento. Após a matrícula, orientamos sobre os itens necessários para cada modalidade. O investimento inicial é mínimo.",
+	},
+	{
+		Question: "A academia prepara atletas para competição?",
+		Answer:   "Sim! Temos um programa competitivo completo com preparação física, técnica e mental. Nossos atletas representam a Arena VIP em campeonatos estaduais, nacionais e internacionais. A participação é sempre opcional.",
+	},
+	{
+		Question: "Quais são as formas de pagamento?",
+		Answer:   "Aceitamos cartão de crédito, débito, PIX e boleto bancário. Temos planos mensais, trimestrais e semestrais com condições especiais para pagamentos antecipados. Entre em contato para conhecer os valores.",
+	},
+}
+
+templ FAQ() {
+	@atoms.SectionAlt("faq") {
+		@atoms.Container() {
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+				<!-- Left: Title -->
+				<div class="space-y-6">
+					@atoms.SectionTitle("Tire suas Dúvidas", "Perguntas", "Frequentes", false)
+					<p class="text-ink/55 text-sm font-body leading-relaxed">
+						Não encontrou o que procura? Fale diretamente com a gente pelo WhatsApp ou formulário de contato.
+					</p>
+					<a
+						href="https://wa.me/351934551015"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 text-xs font-accent font-semibold tracking-widest uppercase text-gold hover:gap-4 transition-all duration-200"
+					>
+						Falar pelo WhatsApp
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+						</svg>
+					</a>
+				</div>
+				<!-- Right: Accordion — single x-data scope so open state is shared -->
+				<div class="lg:col-span-2 space-y-2" x-data="{ open: null }">
+					for i, item := range faqItems {
+						<div class="border border-edge hover:border-accent/20 transition-colors duration-200 bg-canvas">
+							<button
+								type="button"
+								@click={ fmt.Sprintf("open === %d ? open = null : open = %d", i, i) }
+								class="w-full flex items-center justify-between gap-4 p-5 text-left group"
+							>
+								<span class="font-accent text-sm font-semibold tracking-wide text-ink/80 group-hover:text-ink transition-colors">{ item.Question }</span>
+								<svg
+									class="w-4 h-4 text-accent/40 flex-shrink-0 transition-transform duration-200"
+									:class={ fmt.Sprintf("open === %d ? 'rotate-180 text-accent' : ''", i) }
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+								>
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+								</svg>
+							</button>
+							<div
+								x-show={ fmt.Sprintf("open === %d", i) }
+								x-cloak
+								x-transition:enter="transition ease-out duration-200"
+								x-transition:enter-start="opacity-0 -translate-y-1"
+								x-transition:enter-end="opacity-100 translate-y-0"
+								x-transition:leave="transition ease-in duration-150"
+								x-transition:leave-start="opacity-100 translate-y-0"
+								x-transition:leave-end="opacity-0 -translate-y-1"
+								class="px-5 pb-5"
+							>
+								<p class="text-sm text-ink/60 font-body leading-relaxed border-t border-edge pt-4">{ item.Answer }</p>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+		}
+	}
+}

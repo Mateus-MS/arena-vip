@@ -1,0 +1,65 @@
+package atoms
+
+templ Input(label, name, placeholder, inputType string, required bool) {
+	<div class="space-y-1.5">
+		if label != "" {
+			<label for={ name } class="block text-xs font-accent font-semibold tracking-widest uppercase text-muted">
+				{ label }
+				if required {
+					<span class="text-accent ml-0.5" aria-hidden="true">*</span>
+				}
+			</label>
+		}
+		if required {
+			<input
+				type={ inputType }
+				name={ name }
+				id={ name }
+				placeholder={ placeholder }
+				required
+				class="w-full bg-surface border border-edge text-ink placeholder-subtle px-4 py-3 text-sm font-body focus:outline-none focus:border-accent/60 transition-colors duration-200"
+			/>
+		} else {
+			<input
+				type={ inputType }
+				name={ name }
+				id={ name }
+				placeholder={ placeholder }
+				class="w-full bg-surface border border-edge text-ink placeholder-subtle px-4 py-3 text-sm font-body focus:outline-none focus:border-accent/60 transition-colors duration-200"
+			/>
+		}
+	</div>
+}
+
+templ Textarea(label, name, placeholder string, rows int, required bool) {
+	<div class="space-y-1.5">
+		if label != "" {
+			<label for={ name } class="block text-xs font-accent font-semibold tracking-widest uppercase text-muted">
+				{ label }
+				if required {
+					<span class="text-accent ml-0.5" aria-hidden="true">*</span>
+				}
+			</label>
+		}
+		<textarea
+			name={ name }
+			id={ name }
+			placeholder={ placeholder }
+			rows={ rowsStr(rows) }
+			class="w-full bg-surface border border-edge text-ink placeholder-subtle px-4 py-3 text-sm font-body focus:outline-none focus:border-accent/60 transition-colors duration-200 resize-none"
+		></textarea>
+	</div>
+}
+
+func rowsStr(r int) string {
+	switch r {
+	case 3:
+		return "3"
+	case 5:
+		return "5"
+	case 6:
+		return "6"
+	default:
+		return "4"
+	}
+}

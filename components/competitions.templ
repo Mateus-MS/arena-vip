@@ -1,0 +1,150 @@
+package components
+
+import "arena-vip/atoms"
+
+type Competition struct {
+	Year        string
+	Title       string
+	Result      string
+	Category    string
+	Federation  string
+}
+
+var competitions = []Competition{
+	{Year: "2024", Title: "Campeonato Estadual de BJJ", Result: "Campeões por equipes", Category: "BJJ", Federation: "FEBJJ"},
+	{Year: "2024", Title: "Copa Brasil de Jiu-Jitsu", Result: "3 Medalhas de Ouro", Category: "BJJ", Federation: "CBJJ"},
+	{Year: "2023", Title: "Campeonato Brasileiro", Result: "15 medalhas — 4 ouros", Category: "BJJ", Federation: "CBJJ"},
+	{Year: "2023", Title: "Copa Pan-Americana", Result: "2 Atletas Classificados", Category: "BJJ", Federation: "IBJJF"},
+	{Year: "2023", Title: "Camp. Estadual de Kickboxing", Result: "Campeão Individual", Category: "Kickboxing", Federation: "CBKB"},
+	{Year: "2022", Title: "Campeonato Estadual de BJJ", Result: "Campeões por equipes", Category: "BJJ", Federation: "FEBJJ"},
+	{Year: "2022", Title: "Seletiva Team Brasil — Judô", Result: "1 Atleta Selecionado", Category: "Judô", Federation: "CBJ"},
+	{Year: "2022", Title: "Copa Internacional BJJ", Result: "Equipe Top 5 Nacional", Category: "BJJ", Federation: "IBJJF"},
+}
+
+templ Competitions(preview bool) {
+	@atoms.ContrastSection("competicoes") {
+		@atoms.Container() {
+			<div class="space-y-14">
+				<!-- Header with ghost number -->
+				<div class="relative">
+					<div class="absolute -top-4 right-0 font-display text-[9rem] md:text-[11rem] leading-none text-white/[0.03] select-none pointer-events-none hidden sm:block">50+</div>
+					<div class="relative flex flex-col md:flex-row md:items-end justify-between gap-6">
+						@atoms.SectionTitle("Resultados", "Palmarés que", "fala por si", true)
+						if preview {
+							<a href="/resultados" class="inline-flex items-center gap-2 text-xs font-accent font-semibold tracking-widest uppercase text-gold hover:gap-4 transition-all duration-200 self-end">
+								Ver histórico completo
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+								</svg>
+							</a>
+						}
+					</div>
+				</div>
+				<!-- Stats strip -->
+				if preview {
+					<div class="flex items-stretch border border-white/8 overflow-hidden">
+						<div class="relative flex-1 px-6 py-5 text-center">
+							<div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"></div>
+							<div class="font-display text-4xl text-gold leading-none">50+</div>
+							<div class="text-[9px] font-accent tracking-[0.2em] uppercase text-white/30 mt-1.5">Pódios</div>
+						</div>
+						<div class="relative flex-1 px-6 py-5 text-center border-x border-white/8">
+							<div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"></div>
+							<div class="font-display text-4xl text-gold leading-none">8</div>
+							<div class="text-[9px] font-accent tracking-[0.2em] uppercase text-white/30 mt-1.5">Atletas Time Brasil</div>
+						</div>
+						<div class="relative flex-1 px-6 py-5 text-center">
+							<div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"></div>
+							<div class="font-display text-4xl text-gold leading-none">3×</div>
+							<div class="text-[9px] font-accent tracking-[0.2em] uppercase text-white/30 mt-1.5">Campeões Estaduais</div>
+						</div>
+					</div>
+				} else {
+					<div class="grid grid-cols-3 border border-white/8 overflow-hidden">
+						<div class="relative p-6 md:p-10 text-center space-y-2 group">
+							<div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"></div>
+							<div class="font-display text-5xl md:text-7xl text-gold leading-none">50+</div>
+							<div class="text-[9px] font-accent tracking-[0.25em] uppercase text-white/30">Pódios</div>
+							<div class="text-[9px] font-accent tracking-[0.15em] uppercase text-white/15">conquistados</div>
+						</div>
+						<div class="relative p-6 md:p-10 text-center space-y-2 border-x border-white/8">
+							<div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"></div>
+							<div class="font-display text-5xl md:text-7xl text-gold leading-none">8</div>
+							<div class="text-[9px] font-accent tracking-[0.25em] uppercase text-white/30">Atletas</div>
+							<div class="text-[9px] font-accent tracking-[0.15em] uppercase text-white/15">no Time Brasil</div>
+						</div>
+						<div class="relative p-6 md:p-10 text-center space-y-2">
+							<div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"></div>
+							<div class="font-display text-5xl md:text-7xl text-gold leading-none">3×</div>
+							<div class="text-[9px] font-accent tracking-[0.25em] uppercase text-white/30">Campeões</div>
+							<div class="text-[9px] font-accent tracking-[0.15em] uppercase text-white/15">estaduais</div>
+						</div>
+					</div>
+				}
+				<!-- Championship cards grid -->
+				<div class="space-y-5">
+					<div class="flex items-center gap-3">
+						<div class="w-5 h-px bg-gold/40"></div>
+						<span class="font-accent text-[9px] tracking-[0.3em] uppercase text-gold/40">Campeonatos &amp; Conquistas</span>
+					</div>
+					<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+						for i, c := range competitions {
+							if !preview || i < 4 {
+								@competitionCard(c)
+							}
+						}
+					</div>
+				</div>
+				<!-- Featured season callout -->
+				<div class="relative overflow-hidden border border-gold/20 bg-gold/3">
+					<div class="absolute top-0 left-0 bottom-0 w-1 bg-gold/60"></div>
+					<div class="absolute inset-0 flex items-center justify-end pr-8 pointer-events-none select-none overflow-hidden">
+						<span class="font-display text-[8rem] leading-none text-gold/4">2023</span>
+					</div>
+					<div class="relative pl-8 pr-6 py-7 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+						<div class="w-12 h-12 border border-gold/30 flex items-center justify-center flex-shrink-0">
+							<svg class="w-6 h-6 text-gold/70" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clip-rule="evenodd"></path>
+							</svg>
+						</div>
+						<div class="flex-1 space-y-1">
+							<div class="font-display text-lg text-white uppercase tracking-wide">Destaque — Temporada 2023</div>
+							<div class="text-sm text-white/45 font-body leading-relaxed">15 medalhas no Campeonato Brasileiro CBJJ — incluindo 4 ouros e 2 atletas classificados para a Copa Pan-Americana.</div>
+						</div>
+						@atoms.ButtonLink("Quero Competir", "#contato", "secondary-light", "sm")
+					</div>
+				</div>
+			</div>
+		}
+	}
+}
+
+templ competitionCard(c Competition) {
+	<div class="group relative border border-white/8 hover:border-gold/30 bg-white/2 hover:bg-white/4 transition-all duration-300 overflow-hidden cursor-default">
+		<!-- Top accent line -->
+		<div class="h-px w-full bg-gradient-to-r from-gold/40 via-gold/15 to-transparent"></div>
+		<div class="p-5 space-y-4">
+			<!-- Logo placeholder + year -->
+			<div class="flex items-start justify-between gap-2">
+				<div class="w-14 h-14 border border-dashed border-white/12 group-hover:border-gold/25 flex items-center justify-center flex-shrink-0 bg-white/2 transition-colors duration-300">
+					<span class="font-display text-base text-white/18 leading-none tracking-wider group-hover:text-white/30 transition-colors duration-300">{ c.Federation }</span>
+				</div>
+				<div class="border border-white/10 px-2 py-0.5 group-hover:border-gold/20 transition-colors duration-300">
+					<span class="font-display text-xs text-gold/50 leading-none">{ c.Year }</span>
+				</div>
+			</div>
+			<!-- Category + Title -->
+			<div class="space-y-1">
+				<div class="text-[8px] font-accent tracking-[0.25em] uppercase text-white/22">{ c.Category }</div>
+				<div class="font-accent text-xs font-semibold text-white/70 leading-snug">{ c.Title }</div>
+			</div>
+			<!-- Result -->
+			<div class="flex items-center gap-1.5 pt-3 border-t border-white/6">
+				<svg class="w-3 h-3 text-gold/60 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+					<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+				</svg>
+				<span class="text-[10px] text-gold/80 font-body font-medium leading-snug">{ c.Result }</span>
+			</div>
+		</div>
+	</div>
+}

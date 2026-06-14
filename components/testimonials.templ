@@ -1,0 +1,224 @@
+package components
+
+import "arena-vip/atoms"
+
+type Testimonial struct {
+	Name     string
+	Belt     string
+	Role     string
+	Modality string
+	Duration string
+	Quote    string
+	Rating   int
+}
+
+var testimonials = []Testimonial{
+	{
+		Name:     "João Mendes",
+		Belt:     "Faixa Azul",
+		Role:     "Aluno há 2 anos",
+		Modality: "Brazilian Jiu-Jitsu",
+		Duration: "2 anos",
+		Quote:    "O melhor investimento que já fiz. A evolução não é só no tatame — você sai daqui mais disciplinado, mais focado e com uma mentalidade completamente diferente. Os professores são incríveis.",
+		Rating:   5,
+	},
+	{
+		Name:     "Ana Lúcia",
+		Belt:     "",
+		Role:     "Mãe de aluno",
+		Modality: "Judô Kids",
+		Duration: "8 meses",
+		Quote:    "Meu filho chegou sem se encaixar em lugar nenhum. Em 6 meses de Judô ele ganhou confiança, fez amigos e ficou entre os melhores da turma na escola. A academia mudou a vida da nossa família.",
+		Rating:   5,
+	},
+	{
+		Name:     "Pedro Rocha",
+		Belt:     "Faixa Roxa",
+		Role:     "Competidor ativo",
+		Modality: "Brazilian Jiu-Jitsu",
+		Duration: "3 anos",
+		Quote:    "Em 18 meses já estava competindo e ganhei minha primeira medalha. O nível técnico aqui é excepcional. Se você quer evoluir de verdade, esse é o lugar certo.",
+		Rating:   5,
+	},
+	{
+		Name:     "Fernanda Lima",
+		Belt:     "",
+		Role:     "Aluna de Kickboxing",
+		Modality: "Kickboxing",
+		Duration: "4 meses",
+		Quote:    "Comecei pelo condicionamento físico e me apaixonei. Perdi 12kg em 4 meses e hoje sou uma pessoa completamente diferente. O professor Rafael é fenomenal.",
+		Rating:   5,
+	},
+}
+
+templ Testimonials(preview bool) {
+	@atoms.Section("depoimentos") {
+		@atoms.Container() {
+			if preview {
+				@testimonialsPreview()
+			} else {
+				@testimonialsGrid()
+			}
+		}
+	}
+}
+
+templ testimonialsPreview() {
+	<div class="space-y-12">
+		<!-- Header row: title + rating pill -->
+		<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+			@atoms.SectionTitle("Depoimentos", "O que nossos", "Alunos dizem", false)
+			<!-- Inline rating pill -->
+			<div class="flex items-center gap-3 flex-shrink-0 border border-edge px-5 py-3 bg-canvas self-start md:self-end">
+				<div class="flex gap-0.5">
+					for i := 0; i < 5; i++ {
+						<svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+					}
+				</div>
+				<span class="font-display text-xl text-ink leading-none">4.9</span>
+				<div class="w-px h-4 bg-edge"></div>
+				<span class="text-xs font-accent tracking-widest uppercase text-muted">+350 avaliações</span>
+			</div>
+		</div>
+		<!-- Two equal quote cards -->
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			for _, t := range testimonials[:2] {
+				@testimonialCard(t)
+			}
+		</div>
+		<!-- Footer link -->
+		<div class="flex justify-end">
+			<a href="/depoimentos" class="inline-flex items-center gap-2 text-xs font-accent font-semibold tracking-widest uppercase text-accent hover:gap-4 transition-all duration-200">
+				Ver todos os depoimentos
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+				</svg>
+			</a>
+		</div>
+	</div>
+}
+
+templ testimonialsGrid() {
+	<div class="space-y-10">
+		<!-- Header -->
+		<div class="text-center space-y-4">
+			@atoms.SectionTitle("Depoimentos", "O que nossos", "Alunos dizem", false)
+		</div>
+		<!-- Full grid: 2x2 -->
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			for _, t := range testimonials {
+				@testimonialCard(t)
+			}
+		</div>
+	</div>
+}
+
+templ testimonialFeatured(t Testimonial) {
+	<div class="lg:col-span-3 group relative bg-canvas border border-edge hover:border-accent/20 transition-all duration-300 overflow-hidden flex flex-col">
+		<!-- Top accent line -->
+		<div class="h-0.5 w-full bg-gradient-to-r from-accent via-gold to-transparent"></div>
+		<div class="p-8 md:p-10 flex flex-col flex-1 space-y-6">
+			<!-- Big quote mark -->
+			<div class="font-display text-8xl text-gold/20 leading-none select-none -mb-4">"</div>
+			<!-- Quote — larger text -->
+			<blockquote class="text-ink/80 text-lg md:text-xl font-body leading-relaxed font-light flex-1">
+				{ t.Quote }
+			</blockquote>
+			<!-- Divider -->
+			<div class="w-12 h-px bg-accent/40"></div>
+			<!-- Author -->
+			<div class="flex items-center justify-between gap-4">
+				<div class="flex items-center gap-4">
+					<div class="w-12 h-12 bg-surface border border-edge flex items-center justify-center flex-shrink-0">
+						<span class="font-display text-xl text-muted">{ string([]rune(t.Name)[0:1]) }</span>
+					</div>
+					<div>
+						<div class="font-accent text-sm font-semibold text-ink tracking-wide">{ t.Name }</div>
+						<div class="text-xs text-muted mt-0.5">{ t.Role } · { t.Modality }</div>
+						if t.Belt != "" {
+							<div class="mt-1">
+								@atoms.BeltBadge(t.Belt)
+							</div>
+						}
+					</div>
+				</div>
+				<!-- Stars -->
+				<div class="flex gap-0.5 flex-shrink-0">
+					for j := 0; j < t.Rating; j++ {
+						<svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+templ testimonialCompact(t Testimonial) {
+	<div class="group bg-canvas border border-edge hover:border-accent/20 transition-all duration-300 overflow-hidden">
+		<div class="p-6 space-y-4">
+			<div class="flex items-center justify-between">
+				<div class="flex gap-0.5">
+					for j := 0; j < t.Rating; j++ {
+						<svg class="w-3.5 h-3.5 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+					}
+				</div>
+				<span class="text-[9px] font-accent tracking-widest uppercase text-muted">{ t.Modality }</span>
+			</div>
+			<blockquote class="text-ink/70 text-sm font-body leading-relaxed">
+				"{ t.Quote }"
+			</blockquote>
+			<div class="flex items-center gap-3 pt-1 border-t border-edge">
+				<div class="w-8 h-8 bg-surface border border-edge flex items-center justify-center flex-shrink-0">
+					<span class="font-display text-sm text-muted">{ string([]rune(t.Name)[0:1]) }</span>
+				</div>
+				<div>
+					<div class="font-accent text-xs font-semibold text-ink tracking-wide">{ t.Name }</div>
+					<div class="text-[10px] text-muted">{ t.Role }</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+func GetTestimonials() []Testimonial {
+	return testimonials
+}
+
+templ TestimonialCardPublic(t Testimonial) {
+	@testimonialCard(t)
+}
+
+templ testimonialCard(t Testimonial) {
+	<div class="group relative bg-canvas border border-edge hover:border-accent/20 transition-all duration-300 overflow-hidden">
+		<!-- Left modality stripe -->
+		<div class="absolute top-0 left-0 bottom-0 w-0.5 bg-edge group-hover:bg-accent/40 transition-colors duration-300"></div>
+		<div class="pl-7 pr-6 py-7 space-y-5 flex flex-col h-full">
+			<!-- Top: stars + modality -->
+			<div class="flex items-center justify-between">
+				<div class="flex gap-0.5">
+					for j := 0; j < t.Rating; j++ {
+						<svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+					}
+				</div>
+				<span class="text-[9px] font-accent tracking-widest uppercase text-muted">{ t.Modality }</span>
+			</div>
+			<!-- Quote -->
+			<blockquote class="text-ink/70 text-sm font-body leading-relaxed flex-1">
+				"{ t.Quote }"
+			</blockquote>
+			<!-- Author -->
+			<div class="flex items-center gap-3 pt-3 border-t border-edge">
+				<div class="w-10 h-10 bg-surface border border-edge flex items-center justify-center flex-shrink-0">
+					<span class="font-display text-base text-muted">{ string([]rune(t.Name)[0:1]) }</span>
+				</div>
+				<div class="flex-1 min-w-0">
+					<div class="font-accent text-sm font-semibold text-ink tracking-wide">{ t.Name }</div>
+					<div class="text-xs text-muted">{ t.Role }</div>
+				</div>
+				if t.Belt != "" {
+					@atoms.BeltBadge(t.Belt)
+				}
+			</div>
+		</div>
+	</div>
+}

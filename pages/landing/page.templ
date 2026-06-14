@@ -1,0 +1,39 @@
+package landing
+
+import (
+	"arena-vip/app"
+	"arena-vip/components"
+	"arena-vip/pages/landing/frags"
+	"arena-vip/templates"
+	"arena-vip/utils"
+)
+
+func init() {
+	app.GetInstance().Router.GET("/", utils.Render(Page()))
+}
+
+templ Page() {
+	@templates.Base(
+		"Arena VIP — Academia de Artes Marciais Premium | BJJ · Kickboxing · Judô",
+		"Academia de artes marciais premium em São Paulo. Brazilian Jiu-Jitsu, Kickboxing e Judô para todos os níveis. Aula experimental gratuita. Instrutores de alto nível.",
+	) {
+		@components.Navbar(true)
+		<main>
+			@frags.Hero()
+			@frags.SocialProof()
+			@frags.Modalities()
+			@components.Coaches(true)
+			@components.Testimonials(true)
+			@components.Competitions(true)
+			@frags.About()
+			@frags.Join()
+			@components.Contact()
+			@frags.Location()
+		</main>
+		@components.Footer()
+		<script type="module" src="/static/js/belt.js"></script>
+		<!-- Disabled: particle animation
+		<script defer src="/static/js/particles.js"></script>
+		-->
+	}
+}

@@ -1,0 +1,77 @@
+package frags
+
+import "arena-vip/atoms"
+
+type Step struct {
+	Number string
+	Title  string
+	Desc   string
+}
+
+var steps = []Step{
+	{Number: "01", Title: "Fale Conosco", Desc: "Entre em contato pelo WhatsApp, formulário ou venha pessoalmente. Sem pressão, sem compromisso."},
+	{Number: "02", Title: "Aula Experimental", Desc: "Agende sua aula gratuita e experimente qualquer modalidade que te interessa. Sem obrigação de matrícula."},
+	{Number: "03", Title: "Escolha Seu Plano", Desc: "Encontramos juntos o plano ideal para sua rotina, objetivo e orçamento. Opções para todos os perfis."},
+	{Number: "04", Title: "Comece a Treinar", Desc: "Bem-vindo à família Arena VIP. Sua transformação começa agora."},
+}
+
+templ Join() {
+	@atoms.Section("como-comecar") {
+		@atoms.Container() {
+			<div class="space-y-16">
+				<div class="text-center space-y-4 max-w-2xl mx-auto">
+					@atoms.SectionTitle("Processo Simples", "Como", "Começar", false)
+					<p class="text-ink/55 text-sm font-body leading-relaxed">
+						Em quatro passos você já está treinando. Sem burocracia, sem complicação.
+					</p>
+				</div>
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+					for i, s := range steps {
+						@stepCard(s, i == len(steps)-1)
+					}
+				</div>
+				<!-- CTA block -->
+				<div class="relative overflow-hidden bg-contrast border border-gold/20 p-10 md:p-14 text-center space-y-6">
+					<!-- Background glow -->
+					<div class="absolute inset-0 bg-gold/3 pointer-events-none"></div>
+					<div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-px bg-gold/60"></div>
+					<div class="relative">
+						<p class="font-accent text-xs tracking-[0.25em] uppercase text-gold mb-3">Primeira aula grátis</p>
+						<h3 class="font-display text-4xl md:text-5xl text-white uppercase leading-tight mb-4">
+							Pronto para<br/>
+							<span class="text-gold">começar?</span>
+						</h3>
+						<p class="text-white/45 text-sm font-body max-w-md mx-auto mb-8">
+							Não deixe para amanhã. A sua primeira aula é gratuita e sem compromisso.
+						</p>
+						<div class="flex flex-col sm:flex-row gap-4 justify-center">
+							@atoms.ButtonLink("Agendar Minha Aula Gratuita", "#contato", "primary", "lg")
+							@atoms.ButtonLink("Falar pelo WhatsApp", "https://wa.me/351934551015", "secondary-light", "lg")
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	}
+}
+
+templ stepCard(s Step, isLast bool) {
+	<div class="relative group">
+		<!-- Connector line (not on last) -->
+		if !isLast {
+			<div class="hidden lg:block absolute top-8 left-full w-full h-px bg-edge z-0" style="width: calc(100% - 2rem)"></div>
+		}
+		<div class="relative z-10 space-y-4 p-6 border border-edge group-hover:border-accent/20 transition-colors duration-300 bg-canvas">
+			<div class="flex items-center justify-between">
+				<span class="font-display text-5xl text-gold/20 group-hover:text-gold/40 transition-colors duration-300 leading-none">{ s.Number }</span>
+				<div class="w-8 h-8 border border-gold/20 flex items-center justify-center group-hover:border-gold/50 transition-colors duration-300">
+					<div class="w-2 h-2 bg-gold/40 group-hover:bg-gold transition-colors duration-300"></div>
+				</div>
+			</div>
+			<div>
+				<h4 class="font-display text-xl text-ink uppercase tracking-wide mb-2">{ s.Title }</h4>
+				<p class="text-xs text-muted font-body leading-relaxed">{ s.Desc }</p>
+			</div>
+		</div>
+	</div>
+}

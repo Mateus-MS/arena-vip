@@ -1,0 +1,151 @@
+package frags
+
+import "arena-vip/atoms"
+
+templ Modalities() {
+	@atoms.Section("modalidades") {
+		@atoms.Container() {
+			<div class="space-y-14">
+				<!-- Header -->
+				<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+					@atoms.SectionTitle("O que oferecemos", "Nossas", "Modalidades", false)
+					<p class="text-muted text-sm font-body max-w-xs md:text-right leading-relaxed">
+						Três artes marciais. Um único propósito.
+					</p>
+				</div>
+				<!-- Asymmetric grid: BJJ dominates -->
+				<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+					<!-- BJJ — spans 2 cols, large featured card -->
+					<div class="lg:col-span-2 group relative overflow-hidden border border-accent/20 hover:border-accent/50 bg-canvas transition-all duration-500 shadow-sm flex flex-col">
+						<!-- Thick red left rail -->
+						<div class="absolute top-0 left-0 bottom-0 w-1 bg-accent"></div>
+						<!-- Large ghost text background -->
+						<div class="absolute inset-0 flex items-center justify-end pr-8 pointer-events-none select-none overflow-hidden">
+							<span class="hidden sm:block font-display text-[10rem] lg:text-[14rem] leading-none text-ink/4 uppercase tracking-tighter">BJJ</span>
+						</div>
+						<div class="relative p-8 md:p-10 flex flex-col flex-1 space-y-8">
+							<!-- Top row: label + belt strip -->
+							<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+								<div class="space-y-2">
+									@atoms.Badge("Modalidade Principal")
+									<div class="font-accent text-xs tracking-[0.25em] uppercase text-gold">A Arte Suave</div>
+								</div>
+								<!-- Belt progression visual -->
+								<div class="flex flex-col gap-1.5 items-end">
+									<span class="text-[9px] font-accent tracking-widest uppercase text-muted">Progressão de faixas</span>
+									<div class="flex gap-1.5">
+										<div class="w-8 h-2.5 bg-white border border-edge rounded-sm"></div>
+										<div class="w-8 h-2.5 bg-blue-500 rounded-sm"></div>
+										<div class="w-8 h-2.5 bg-purple-600 rounded-sm"></div>
+										<div class="w-8 h-2.5 bg-yellow-800 rounded-sm"></div>
+										<div class="w-8 h-2.5 bg-ink rounded-sm relative overflow-hidden">
+											<div class="absolute right-0 top-0 bottom-0 w-2 bg-accent"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Title -->
+							<div>
+								<h3 class="font-display text-5xl md:text-6xl text-ink uppercase leading-none tracking-tight">Brazilian<br/>Jiu-Jitsu</h3>
+							</div>
+							<!-- Divider -->
+							<div class="w-12 h-px bg-accent"></div>
+							<!-- Description -->
+							<p class="text-ink/65 text-base font-body leading-relaxed max-w-lg">
+								A modalidade que define a Arena VIP. Técnica refinada, estratégia inteligente e a filosofia da arte suave — você aprende a controlar, submeter e evoluir sem depender da força.
+							</p>
+							<!-- Benefits in 2-col grid -->
+							<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+								<div class="flex items-center gap-3">
+									<div class="w-6 h-6 bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
+										<svg class="w-3 h-3 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+									</div>
+									<span class="text-sm text-ink/70 font-body">Defesa pessoal eficaz</span>
+								</div>
+								<div class="flex items-center gap-3">
+									<div class="w-6 h-6 bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
+										<svg class="w-3 h-3 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+									</div>
+									<span class="text-sm text-ink/70 font-body">Desenvolvimento mental</span>
+								</div>
+								<div class="flex items-center gap-3">
+									<div class="w-6 h-6 bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
+										<svg class="w-3 h-3 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+									</div>
+									<span class="text-sm text-ink/70 font-body">Turmas para todos os níveis</span>
+								</div>
+								<div class="flex items-center gap-3">
+									<div class="w-6 h-6 bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
+										<svg class="w-3 h-3 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+									</div>
+									<span class="text-sm text-ink/70 font-body">Equipe competitiva ativa</span>
+								</div>
+							</div>
+							<!-- Tags + CTA row -->
+							<div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-edge">
+								<div class="flex flex-wrap gap-2">
+									<span class="text-[10px] font-accent tracking-widest uppercase text-muted px-2 py-1 border border-edge">Adultos</span>
+									<span class="text-[10px] font-accent tracking-widest uppercase text-muted px-2 py-1 border border-edge">Kids</span>
+									<span class="text-[10px] font-accent tracking-widest uppercase text-muted px-2 py-1 border border-edge">Competição</span>
+									<span class="text-[10px] font-accent tracking-widest uppercase text-muted px-2 py-1 border border-edge">Iniciantes</span>
+								</div>
+								<a href="#contato" class="inline-flex items-center gap-2 text-xs font-accent font-semibold tracking-widest uppercase text-accent hover:gap-4 transition-all duration-200">
+									Agendar aula
+									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+					<!-- Right column: Kickboxing + Judô stacked -->
+					<div class="flex flex-col gap-6">
+						<!-- Kickboxing -->
+						<div class="group relative flex-1 overflow-hidden border border-edge hover:border-accent/25 bg-canvas transition-all duration-300 shadow-sm">
+							<div class="absolute top-0 left-0 right-0 h-0.5 bg-gold/60"></div>
+							<div class="p-6 h-full flex flex-col space-y-4">
+								<div>
+									<div class="font-accent text-[10px] tracking-[0.3em] uppercase text-gold mb-1">Poder com Precisão</div>
+									<h3 class="font-display text-2xl text-ink uppercase tracking-wide leading-tight">Kickboxing</h3>
+								</div>
+								<div class="w-8 h-px bg-edge group-hover:w-12 group-hover:bg-accent transition-all duration-300"></div>
+								<p class="text-ink/55 text-sm font-body leading-relaxed flex-1">
+									Golpes explosivos, condicionamento de alto nível e defesa completa. Ideal para quem quer potência e agilidade.
+								</p>
+								<div class="flex flex-wrap gap-1.5 pt-2 border-t border-edge">
+									<span class="text-[9px] font-accent tracking-widest uppercase text-muted px-1.5 py-1 border border-edge">Adultos</span>
+									<span class="text-[9px] font-accent tracking-widest uppercase text-muted px-1.5 py-1 border border-edge">Condicionamento</span>
+								</div>
+								<a href="#contato" class="inline-flex items-center gap-1.5 text-[10px] font-accent font-semibold tracking-widest uppercase text-accent hover:gap-3 transition-all duration-200">
+									Saiba mais <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+								</a>
+							</div>
+						</div>
+						<!-- Judô -->
+						<div class="group relative flex-1 overflow-hidden border border-edge hover:border-accent/25 bg-canvas transition-all duration-300 shadow-sm">
+							<div class="absolute top-0 left-0 right-0 h-0.5 bg-gold/60"></div>
+							<div class="p-6 h-full flex flex-col space-y-4">
+								<div>
+									<div class="font-accent text-[10px] tracking-[0.3em] uppercase text-gold mb-1">A Gentileza do Guerreiro</div>
+									<h3 class="font-display text-2xl text-ink uppercase tracking-wide leading-tight">Judô</h3>
+								</div>
+								<div class="w-8 h-px bg-edge group-hover:w-12 group-hover:bg-accent transition-all duration-300"></div>
+								<p class="text-ink/55 text-sm font-body leading-relaxed flex-1">
+									Arte olímpica das quedas e projeções. Equilíbrio, disciplina e respeito — ideal para todas as idades.
+								</p>
+								<div class="flex flex-wrap gap-1.5 pt-2 border-t border-edge">
+									<span class="text-[9px] font-accent tracking-widest uppercase text-muted px-1.5 py-1 border border-edge">Kids</span>
+									<span class="text-[9px] font-accent tracking-widest uppercase text-muted px-1.5 py-1 border border-edge">Adultos</span>
+									<span class="text-[9px] font-accent tracking-widest uppercase text-muted px-1.5 py-1 border border-edge">Olímpico</span>
+								</div>
+								<a href="#contato" class="inline-flex items-center gap-1.5 text-[10px] font-accent font-semibold tracking-widest uppercase text-accent hover:gap-3 transition-all duration-200">
+									Saiba mais <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	}
+}

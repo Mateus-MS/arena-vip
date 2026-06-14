@@ -1,0 +1,67 @@
+package frags
+
+import "arena-vip/atoms"
+
+templ Hero() {
+	<section class="relative min-h-screen flex flex-col justify-center bg-black overflow-hidden">
+		<!-- Background radial glow -->
+		<div class="absolute inset-0 pointer-events-none">
+			<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold/3 rounded-full blur-[120px]"></div>
+			<div class="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[80px] translate-x-1/4 -translate-y-1/4"></div>
+		</div>
+		<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-16 pb-10 md:pt-24 md:pb-16">
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-center">
+				<!-- Left: Copy -->
+				<div class="space-y-8 z-10">
+					<div class="animate-fade-in-up">
+						@atoms.Badge("Academia de Artes Marciais Premium")
+					</div>
+					<div class="space-y-2 animate-fade-in-up delay-100">
+						<h1 class="font-display text-6xl sm:text-8xl lg:text-8xl xl:text-[9rem] leading-none tracking-tight text-white uppercase">
+							Forje Sua
+						</h1>
+						<h1 class="font-display text-6xl sm:text-8xl lg:text-8xl xl:text-[9rem] leading-none tracking-tight text-accent uppercase">
+							Disciplina.
+						</h1>
+					</div>
+					<p class="text-white/60 text-base md:text-lg font-body font-light leading-relaxed max-w-md animate-fade-in-up delay-200">
+						Jiu-Jitsu Brasileiro, Kickboxing e Judô de alto nível para quem leva a sério o próprio desenvolvimento — dentro e fora do tatame.
+					</p>
+					<div class="flex flex-wrap gap-4 animate-fade-in-up delay-300">
+						@atoms.ButtonLink("Agendar Aula Gratuita", "#contato", "primary", "lg")
+						@atoms.ButtonLink("Conhecer a Academia", "#sobre", "secondary-light", "lg")
+					</div>
+					<!-- Stats row -->
+					<div class="grid grid-cols-3 gap-6 pt-4 border-t border-white/5 animate-fade-in-up delay-500">
+						@heroStat("500+", "Alunos Ativos")
+						@heroStat("10+", "Anos de Excelência")
+						@heroStat("200+", "Medalhas")
+					</div>
+				</div>
+				<!-- Right: 3D belt -->
+				<div class="relative flex flex-col items-center justify-center lg:justify-end animate-fade-in-up delay-300 w-full gap-6">
+					<div class="relative w-full" style="height: clamp(500px, 80vh, 900px)">
+						<div
+							class="absolute inset-0 pointer-events-none"
+							style="background: radial-gradient(circle at 50% 52%, rgba(255,255,255,0.10) 0%, rgba(200,200,200,0.06) 45%, transparent 70%); filter: blur(32px);"
+						></div>
+						<canvas id="belt-canvas" class="absolute inset-0 w-full h-full"></canvas>
+					</div>
+					<div class="flex items-center gap-4 w-full lg:justify-end pb-12">
+						<div class="w-10 h-px bg-gold/60 flex-shrink-0"></div>
+						<p class="font-accent text-[13px] tracking-[0.18em] uppercase text-white italic">
+							Faixa preta é um faixa branca que nunca desistiu
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}
+
+templ heroStat(number, label string) {
+	<div class="space-y-1">
+		<div class="font-display text-3xl md:text-4xl text-gold leading-none">{ number }</div>
+		<div class="text-xs font-accent tracking-widest uppercase text-white/40">{ label }</div>
+	</div>
+}

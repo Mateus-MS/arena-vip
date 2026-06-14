@@ -1,0 +1,227 @@
+package components
+
+import "arena-vip/atoms"
+
+type Coach struct {
+	Name         string
+	Role         string
+	Belt         string
+	BeltColor    string
+	Experience   string
+	ExpYears     string
+	Modality     string
+	Bio          string
+	Photo        string
+	Achievements []string
+}
+
+var coaches = []Coach{
+	{
+		Name:      "Carlos Andrade",
+		Role:      "Head Coach",
+		Belt:      "Faixa Preta",
+		BeltColor: "#BE1228",
+		ExpYears:  "15",
+		Experience: "15 anos",
+		Modality:  "Brazilian Jiu-Jitsu",
+		Photo:     "",
+		Bio:       "Formado pela linhagem Gracie, Carlos dedicou sua vida ao Jiu-Jitsu. Competidor ativo e instrutor nato, treinou centenas de alunos — do iniciante ao atleta de alto rendimento.",
+		Achievements: []string{
+			"3x Campeão Estadual de BJJ",
+			"Medalha de Prata — Camp. Brasileiro",
+			"Formou 4 faixas pretas",
+			"Instrutor certificado IBJJF",
+		},
+	},
+	{
+		Name:      "Rafael Souza",
+		Role:      "Instrutor",
+		Belt:      "Faixa Preta",
+		BeltColor: "#BE1228",
+		ExpYears:  "12",
+		Experience: "12 anos",
+		Modality:  "Kickboxing & BJJ",
+		Photo:     "",
+		Bio:       "Especialista em striking e no-gi, Rafael combina Kickboxing com a base do Jiu-Jitsu. Campeão e formador de campeões, suas aulas são de alto impacto.",
+		Achievements: []string{
+			"2x Campeão Estadual de Kickboxing",
+			"Faixa Preta 1° Grau — BJJ",
+			"Professor certificado CBKB",
+			"Atleta de MMA profissional",
+		},
+	},
+	{
+		Name:      "Marco Ferreira",
+		Role:      "Instrutor",
+		Belt:      "Faixa Preta",
+		BeltColor: "#BE1228",
+		ExpYears:  "18",
+		Experience: "18 anos",
+		Modality:  "Judô & BJJ",
+		Photo:     "",
+		Bio:       "Judoca olímpico em formação, Marco traz a solidez das quedas e o trabalho de base. Sua metodologia com crianças e jovens é referência no estado.",
+		Achievements: []string{
+			"Medalhista Pan-Americano de Judô",
+			"Representante Time Brasil — 2019",
+			"Faixa Roxa — Brazilian Jiu-Jitsu",
+			"Certificado Kodokan — Japão",
+		},
+	},
+}
+
+// CoachPhoto renders the coach photo or a placeholder if Photo is empty.
+templ CoachPhoto(photo, name string) {
+	<div class="relative w-full h-full bg-white/4 overflow-hidden">
+		if photo != "" {
+			<img src={ photo } alt={ name } class="w-full h-full object-cover object-top"/>
+		} else {
+			<div class="w-full h-full flex flex-col items-center justify-center gap-3 select-none">
+				<svg class="w-12 h-12 text-white/10" fill="currentColor" viewBox="0 0 24 24">
+					<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+				</svg>
+				<span class="text-[9px] font-accent tracking-[0.3em] uppercase text-white/20">Foto em breve</span>
+			</div>
+		}
+		<!-- Bottom fade into card -->
+		<div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+	</div>
+}
+
+templ Coaches(preview bool) {
+	@atoms.ContrastSection("professores") {
+		@atoms.Container() {
+			<div class="space-y-14">
+				<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+					@atoms.SectionTitle("Nosso Time", "Conheça os", "Professores", true)
+					<p class="text-white/40 text-sm font-body max-w-xs md:text-right leading-relaxed">
+						Instrutores que vivem o que ensinam. Experiência real, resultados reais.
+					</p>
+				</div>
+				if preview {
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						for _, c := range coaches[:2] {
+							@coachCard(c)
+						}
+					</div>
+					<div class="flex justify-center">
+						<a href="/professores" class="inline-flex items-center gap-2 text-xs font-accent font-semibold tracking-widest uppercase text-gold hover:gap-4 transition-all duration-200">
+							Conhecer equipe completa
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+							</svg>
+						</a>
+					</div>
+				} else {
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+						for _, c := range coaches {
+							@coachCard(c)
+						}
+					</div>
+				}
+			</div>
+		}
+	}
+}
+
+func GetCoach(i int) Coach {
+	if i >= 0 && i < len(coaches) {
+		return coaches[i]
+	}
+	return coaches[0]
+}
+
+templ CoachCardAlt(c Coach) {
+	<div class="group relative border border-white/8 hover:border-gold/40 bg-white/3 transition-all duration-400 overflow-hidden flex flex-row">
+		<!-- Gold left rail -->
+		<div class="absolute top-0 left-0 bottom-0 w-1 bg-gold/50 group-hover:bg-gold transition-colors duration-300 z-10"></div>
+		<!-- Photo -->
+		<div class="w-64 relative overflow-hidden border-r border-white/8 flex-shrink-0">
+			@CoachPhoto(c.Photo, c.Name)
+		</div>
+		<!-- Content -->
+		<div class="p-6 flex flex-col flex-1 gap-4">
+			<!-- Identity -->
+			<div class="space-y-1.5">
+				@atoms.BeltBadge(c.Belt)
+				<h3 class="font-display text-2xl text-white uppercase leading-none tracking-tight">{ c.Name }</h3>
+				<div class="flex items-center gap-2 flex-wrap">
+					<span class="font-accent text-[10px] tracking-widest uppercase text-white/40">{ c.Role }</span>
+					<span class="w-px h-3 bg-white/15"></span>
+					<span class="font-accent text-[10px] tracking-widest uppercase text-gold/60">{ c.Modality }</span>
+				</div>
+				<div class="flex items-center gap-1.5">
+					<span class="font-display text-xl text-gold">{ c.ExpYears }</span>
+					<span class="text-[10px] font-accent tracking-widest uppercase text-white/30">anos exp.</span>
+				</div>
+			</div>
+			<div class="w-full h-px bg-white/6"></div>
+			<!-- Bio -->
+			<p class="text-xs text-white/55 font-body leading-relaxed">{ c.Bio }</p>
+			<!-- Achievements -->
+			<div class="grid grid-cols-1 gap-1.5">
+				for _, a := range c.Achievements {
+					<div class="flex items-start gap-2">
+						<div class="w-1 h-1 rounded-full bg-gold mt-1.5 flex-shrink-0"></div>
+						<span class="text-xs text-white/45 font-body">{ a }</span>
+					</div>
+				}
+			</div>
+			<!-- CTA -->
+			<div class="pt-2 border-t border-white/6 mt-auto">
+				@atoms.ButtonLink("Agendar aula", "/#contato", "secondary-light", "sm")
+			</div>
+		</div>
+	</div>
+}
+
+templ coachCard(c Coach) {
+	<div class="group relative border border-white/8 hover:border-accent/50 bg-white/3 transition-all duration-400 overflow-hidden flex flex-col">
+		<!-- Left accent rail -->
+		<div class="absolute top-0 left-0 bottom-0 w-1 bg-accent/70 group-hover:bg-accent transition-colors duration-300"></div>
+		<!-- Ghost experience number -->
+		<div class="absolute top-4 right-5 font-display text-[7rem] leading-none text-white/4 select-none pointer-events-none group-hover:text-white/6 transition-colors duration-300">
+			{ c.ExpYears }
+		</div>
+		<div class="pl-7 pr-6 pt-7 pb-0 space-y-5 flex-1 flex flex-col">
+			<!-- Identity -->
+			<div class="space-y-1 relative">
+				@atoms.BeltBadge(c.Belt)
+				<h3 class="font-display text-3xl md:text-4xl text-white uppercase leading-none tracking-tight mt-2">
+					{ c.Name }
+				</h3>
+				<div class="flex items-center gap-3 pt-1">
+					<span class="font-accent text-xs tracking-widest uppercase text-white/40">{ c.Role }</span>
+					<span class="w-px h-3 bg-white/15"></span>
+					<span class="font-accent text-xs tracking-widest uppercase text-gold/70">{ c.Modality }</span>
+				</div>
+			</div>
+			<!-- Divider -->
+			<div class="w-full h-px bg-white/6"></div>
+			<!-- Bio -->
+			<p class="text-sm text-white/55 font-body leading-relaxed flex-1">{ c.Bio }</p>
+			<!-- Achievements -->
+			<div class="space-y-2">
+				for _, a := range c.Achievements {
+					<div class="flex items-start gap-2.5">
+						<div class="w-1 h-1 rounded-full bg-accent mt-1.5 flex-shrink-0"></div>
+						<span class="text-xs text-white/45 font-body">{ a }</span>
+					</div>
+				}
+			</div>
+		</div>
+		<!-- Bottom stat strip -->
+		<div class="mt-6 pl-7 pr-6 py-4 border-t border-white/6 flex items-center justify-between">
+			<div class="flex items-center gap-1.5">
+				<span class="font-display text-xl text-gold leading-none">{ c.ExpYears }</span>
+				<span class="text-[10px] font-accent tracking-widest uppercase text-white/30">anos</span>
+			</div>
+			<div class="w-px h-5 bg-white/10"></div>
+			<a href="/professores" class="inline-flex items-center gap-1.5 text-[10px] font-accent font-semibold tracking-widest uppercase text-white/40 hover:text-accent transition-colors duration-200">
+				Ver perfil
+				<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+				</svg>
+			</a>
+		</div>
+	</div>
+}

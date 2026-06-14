@@ -1,0 +1,21 @@
+package atoms
+
+// Light sections
+templ Section(id string) {
+	<section id={ id } class="py-20 md:py-28 bg-canvas">
+		{ children... }
+	</section>
+}
+
+templ SectionAlt(id string) {
+	<section id={ id } class="py-20 md:py-28 bg-surface">
+		{ children... }
+	</section>
+}
+
+// Dark / contrast section
+templ ContrastSection(id string) {
+	<section id={ id } class="py-20 md:py-28 bg-contrast">
+		{ children... }
+	</section>
+}

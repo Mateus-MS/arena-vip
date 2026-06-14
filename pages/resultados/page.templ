@@ -1,0 +1,43 @@
+package resultados
+
+import (
+	"arena-vip/app"
+	"arena-vip/atoms"
+	"arena-vip/components"
+	"arena-vip/pages/resultados/frags"
+	"arena-vip/templates"
+	"arena-vip/utils"
+)
+
+func init() {
+	app.GetInstance().Router.GET("/resultados", utils.Render(Page()))
+}
+
+templ Page() {
+	@templates.Base(
+		"Resultados — Arena VIP",
+		"Histórico completo de competições e conquistas da Arena VIP. Campeonatos estaduais, nacionais e internacionais.",
+	) {
+		@components.Navbar(false)
+		<main>
+			@atoms.Section("resultados-header") {
+				@atoms.Container() {
+					<div class="pt-12 space-y-4">
+						<p class="section-label">Palmarés</p>
+						<h1 class="font-display text-6xl md:text-7xl lg:text-8xl leading-none tracking-tight text-ink uppercase">
+							Histórico de <span class="text-gold">Competições</span>
+						</h1>
+						<p class="text-muted text-base font-body max-w-xl leading-relaxed pt-2">
+							Anos de dedicação refletidos em conquistas reais. Uma academia que compete e vence em todos os níveis.
+						</p>
+					</div>
+				}
+			}
+			@atoms.DividerGold()
+			@components.Competitions(false)
+			@frags.Athletes()
+			@components.Contact()
+		</main>
+		@components.Footer()
+	}
+}

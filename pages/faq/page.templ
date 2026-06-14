@@ -1,0 +1,42 @@
+package faq
+
+import (
+	"arena-vip/app"
+	"arena-vip/atoms"
+	"arena-vip/components"
+	"arena-vip/pages/faq/frags"
+	"arena-vip/templates"
+	"arena-vip/utils"
+)
+
+func init() {
+	app.GetInstance().Router.GET("/faq", utils.Render(Page()))
+}
+
+templ Page() {
+	@templates.Base(
+		"FAQ — Arena VIP",
+		"Perguntas frequentes sobre a Arena VIP. Tudo o que você precisa saber antes de começar a treinar.",
+	) {
+		@components.Navbar(false)
+		<main>
+			@atoms.Section("faq-header") {
+				@atoms.Container() {
+					<div class="pt-12 space-y-4">
+						<p class="section-label">Dúvidas</p>
+						<h1 class="font-display text-6xl md:text-7xl lg:text-8xl leading-none tracking-tight text-ink uppercase">
+							Perguntas <span class="text-gold">Frequentes</span>
+						</h1>
+						<p class="text-muted text-base font-body max-w-xl leading-relaxed pt-2">
+							Não encontrou o que procura? Fale com a gente pelo WhatsApp ou formulário de contato.
+						</p>
+					</div>
+				}
+			}
+			@atoms.DividerGold()
+			@frags.FAQ()
+			@components.Contact()
+		</main>
+		@components.Footer()
+	}
+}

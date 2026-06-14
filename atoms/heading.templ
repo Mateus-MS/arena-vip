@@ -1,0 +1,42 @@
+package atoms
+
+func headingColor(dark bool) string {
+	if dark {
+		return "text-white"
+	}
+	return "text-ink"
+}
+
+templ H1(text string) {
+	<h1 class="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-none tracking-tight text-ink uppercase">
+		{ text }
+	</h1>
+}
+
+templ H2(text string) {
+	<h2 class="font-display text-4xl md:text-5xl lg:text-6xl leading-none tracking-tight text-ink uppercase">
+		{ text }
+	</h2>
+}
+
+templ H3(text string) {
+	<h3 class="font-display text-2xl md:text-3xl leading-tight tracking-wide text-ink uppercase">
+		{ text }
+	</h3>
+}
+
+// dark=true → white heading (use inside bg-contrast sections)
+// dark=false → ink heading (use inside light sections)
+templ SectionTitle(label, title, goldWord string, dark bool) {
+	<div class="space-y-4">
+		if label != "" {
+			<p class="section-label">{ label }</p>
+		}
+		<h2 class={ "font-display text-4xl md:text-5xl lg:text-6xl leading-none tracking-tight uppercase " + headingColor(dark) }>
+			{ title }
+			if goldWord != "" {
+				<span class="text-gold"> { goldWord }</span>
+			}
+		</h2>
+	</div>
+}

@@ -1,0 +1,151 @@
+package depoimentos
+
+import (
+	"arena-vip/app"
+	"arena-vip/atoms"
+	"arena-vip/components"
+	"arena-vip/templates"
+	"arena-vip/utils"
+)
+
+func init() {
+	app.GetInstance().Router.GET("/depoimentos", utils.Render(Page()))
+}
+
+templ Page() {
+	@templates.Base(
+		"Depoimentos — Arena VIP",
+		"Veja o que nossos alunos dizem sobre a Arena VIP. Histórias reais de transformação dentro e fora do tatame.",
+	) {
+		@components.Navbar(false)
+		<main>
+			<!-- Dark hero header -->
+			<section class="relative bg-contrast overflow-hidden">
+				<div class="absolute top-0 left-0 w-[600px] h-[400px] bg-accent/3 rounded-full blur-[120px] -translate-x-1/3 -translate-y-1/2 pointer-events-none"></div>
+				<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-20">
+					<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
+						<div class="space-y-6">
+							<p class="section-label">Histórias Reais</p>
+							<h1 class="font-display text-7xl md:text-8xl lg:text-9xl leading-none tracking-tight text-white uppercase">
+								Alunos que<br/><span class="text-gold">Evoluíram</span>
+							</h1>
+							<p class="text-white/45 text-base font-body leading-relaxed max-w-md">
+								Cada depoimento aqui é de uma pessoa real que escolheu a Arena VIP e transformou sua vida dentro e fora do tatame.
+							</p>
+						</div>
+						<!-- Rating block -->
+						<div class="space-y-4">
+							<div class="border border-white/8 bg-white/3 p-8 space-y-6">
+								<div class="flex items-center gap-6">
+									<div>
+										<div class="font-display text-6xl text-gold leading-none">4.9</div>
+										<div class="flex gap-1 mt-2">
+											for i := 0; i < 5; i++ {
+												<svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+											}
+										</div>
+									</div>
+									<div class="border-l border-white/10 pl-6 space-y-1">
+										<div class="font-display text-3xl text-white">+350</div>
+										<div class="text-xs font-accent tracking-widest uppercase text-white/35">avaliações verificadas</div>
+										<div class="text-xs text-white/30 font-body">Google · Facebook · Instagram</div>
+									</div>
+								</div>
+								<!-- Rating bars -->
+								<div class="space-y-2">
+									@ratingBar("5 estrelas", 92)
+									@ratingBar("4 estrelas", 6)
+									@ratingBar("3 estrelas", 2)
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="h-8 bg-gradient-to-b from-transparent to-contrast"></div>
+			</section>
+			<!-- Featured testimonial -->
+			@atoms.ContrastSection("destaque") {
+				@atoms.Container() {
+					<div class="space-y-10">
+						<div class="flex items-center gap-4">
+							<div class="w-6 h-px bg-gold/50"></div>
+							<span class="font-accent text-xs tracking-[0.25em] uppercase text-gold/70">Depoimento em Destaque</span>
+						</div>
+						<div class="border border-white/8 bg-white/3 overflow-hidden">
+							<div class="grid grid-cols-1 lg:grid-cols-3">
+								<!-- Quote side -->
+								<div class="lg:col-span-2 p-10 md:p-14 space-y-8 border-b lg:border-b-0 lg:border-r border-white/8">
+									<div class="font-display text-[6rem] text-gold/15 leading-none select-none -mb-6">"</div>
+									<blockquote class="text-white/80 text-xl md:text-2xl font-body font-light leading-relaxed">
+										O melhor investimento que já fiz. A evolução não é só no tatame — você sai daqui mais disciplinado, mais focado e com uma mentalidade completamente diferente.
+									</blockquote>
+									<div class="flex gap-1">
+										for i := 0; i < 5; i++ {
+											<svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+										}
+									</div>
+								</div>
+								<!-- Author side -->
+								<div class="p-10 flex flex-col justify-center space-y-6">
+									<div class="w-16 h-16 bg-white/5 border border-white/10 flex items-center justify-center">
+										<span class="font-display text-3xl text-white/30">J</span>
+									</div>
+									<div class="space-y-1">
+										<div class="font-display text-2xl text-white uppercase">João Mendes</div>
+										<div class="text-xs font-accent tracking-widest uppercase text-white/35">Aluno há 2 anos</div>
+										<div class="text-xs text-gold/60 font-accent tracking-widest uppercase mt-2">Brazilian Jiu-Jitsu</div>
+									</div>
+									@atoms.BeltBadge("Faixa Azul")
+									<div class="pt-2">
+										@atoms.ButtonLink("Quero evoluir também", "#contato", "primary", "sm")
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			}
+			<!-- All testimonials grid -->
+			@atoms.Section("todos-depoimentos") {
+				@atoms.Container() {
+					<div class="space-y-10">
+						<div class="flex items-center gap-4">
+							<div class="w-6 h-px bg-accent/60"></div>
+							<span class="font-accent text-xs tracking-[0.25em] uppercase text-muted">Mais depoimentos</span>
+						</div>
+						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+							for _, t := range components.GetTestimonials() {
+								@components.TestimonialCardPublic(t)
+							}
+						</div>
+					</div>
+				}
+			}
+			@components.Contact()
+		</main>
+		@components.Footer()
+	}
+}
+
+templ ratingBar(label string, pct int) {
+	<div class="flex items-center gap-3">
+		<span class="text-[10px] font-accent tracking-wide text-white/35 w-16 flex-shrink-0">{ label }</span>
+		<div class="flex-1 h-1 bg-white/8 overflow-hidden">
+			<div class="h-full bg-gold/60" style={ "width:" + itoa(pct) + "%" }></div>
+		</div>
+		<span class="text-[10px] font-accent text-white/30 w-8 text-right">{ itoa(pct) }%</span>
+	</div>
+}
+
+func itoa(n int) string {
+	switch n {
+	case 92:
+		return "92"
+	case 6:
+		return "6"
+	case 2:
+		return "2"
+	default:
+		return "0"
+	}
+}

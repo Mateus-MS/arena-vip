@@ -1,0 +1,379 @@
+package horarios
+
+import (
+	"time"
+
+	"arena-vip/app"
+	"arena-vip/atoms"
+	"arena-vip/components"
+	"arena-vip/templates"
+	"arena-vip/utils"
+)
+
+func init() {
+	app.GetInstance().Router.GET("/horarios", utils.Render(Page()))
+}
+
+// ── Data model ────────────────────────────────────────────────────────────────
+
+type aula struct {
+	Hora       string
+	Modalidade string
+	Papel      string
+	Instrutor  string
+	Cor        string // Tailwind bg class for the accent stripe
+	CorTexto   string // Tailwind text class for the modality name
+}
+
+type diaSemana struct {
+	Abrev   string
+	Nome    string
+	Weekday time.Weekday
+	Aulas   []aula
+}
+
+var lisboaLoc = func() *time.Location {
+	loc, err := time.LoadLocation("Europe/Lisbon")
+	if err != nil {
+		return time.UTC
+	}
+	return loc
+}()
+
+var semana = []diaSemana{
+	{
+		Abrev: "SEG", Nome: "Segunda-Feira", Weekday: time.Monday,
+		Aulas: []aula{
+			{Hora: "18:30", Modalidade: "Kickboxe", Papel: "Professor", Instrutor: "Ivan", Cor: "bg-accent", CorTexto: "text-accent"},
+			{Hora: "20:00", Modalidade: "Jiu-Jitsu", Papel: "Mestre", Instrutor: "Emerson", Cor: "bg-gold", CorTexto: "text-gold"},
+		},
+	},
+	{
+		Abrev: "TER", Nome: "Terça-Feira", Weekday: time.Tuesday,
+		Aulas: []aula{
+			{Hora: "19:00", Modalidade: "Jiu-Jitsu NoGi", Papel: "Mestre", Instrutor: "Emerson", Cor: "bg-gold", CorTexto: "text-gold"},
+		},
+	},
+	{
+		Abrev: "QUA", Nome: "Quarta-Feira", Weekday: time.Wednesday,
+		Aulas: nil,
+	},
+	{
+		Abrev: "QUI", Nome: "Quinta-Feira", Weekday: time.Thursday,
+		Aulas: []aula{
+			{Hora: "19:30", Modalidade: "Kickboxe", Papel: "Professor", Instrutor: "Ivan", Cor: "bg-accent", CorTexto: "text-accent"},
+			{Hora: "20:30", Modalidade: "Jiu-Jitsu", Papel: "Mestre", Instrutor: "Emerson", Cor: "bg-gold", CorTexto: "text-gold"},
+		},
+	},
+	{
+		Abrev: "SEX", Nome: "Sexta-Feira", Weekday: time.Friday,
+		Aulas: nil,
+	},
+	{
+		Abrev: "SÁB", Nome: "Sábado", Weekday: time.Saturday,
+		Aulas: []aula{
+			{Hora: "15:00", Modalidade: "Judô", Papel: "Sensei", Instrutor: "Elvis", Cor: "bg-blue-500", CorTexto: "text-blue-400"},
+			{Hora: "17:00", Modalidade: "Kickboxe", Papel: "Professor", Instrutor: "Ivan", Cor: "bg-accent", CorTexto: "text-accent"},
+		},
+	},
+	{
+		Abrev: "DOM", Nome: "Domingo", Weekday: time.Sunday,
+		Aulas: nil,
+	},
+}
+
+// ── Today helpers ─────────────────────────────────────────────────────────────
+
+func todayDia() diaSemana {
+	wd := time.Now().In(lisboaLoc).Weekday()
+	for _, d := range semana {
+		if d.Weekday == wd {
+			return d
+		}
+	}
+	return semana[0]
+}
+
+// nextDiaComAulas returns the next day in the week cycle that has classes.
+func nextDiaComAulas(from time.Weekday) diaSemana {
+	for i := 1; i <= 7; i++ {
+		next := time.Weekday((int(from) + i) % 7)
+		for _, d := range semana {
+			if d.Weekday == next && len(d.Aulas) > 0 {
+				return d
+			}
+		}
+	}
+	return semana[0]
+}
+
+func isToday(wd time.Weekday) bool {
+	return time.Now().In(lisboaLoc).Weekday() == wd
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+
+templ Page() {
+	@templates.Base(
+		"Horários — Arena VIP",
+		"Grade de treinos da Arena VIP em Santo Tirso. Kickboxe, Jiu-Jitsu, NoGi e Judô. Veja os horários de hoje e da semana.",
+	) {
+		@components.Navbar(false)
+		<main>
+			<!-- Hero header -->
+			<section id="horarios-header" class="pt-24 pb-16 md:pt-32 md:pb-20 bg-canvas">
+				@atoms.Container() {
+					<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+						<!-- Left: title -->
+						<div class="space-y-6">
+							<p class="section-label">Grade de Treinos</p>
+							<h1 class="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-none tracking-tight text-ink uppercase">
+								Horários<br/>de <span class="text-gold">Treino</span>
+							</h1>
+							<div class="flex items-center gap-3 pt-2">
+								<div class="w-8 h-px bg-gold"></div>
+								<p class="text-muted text-sm font-accent tracking-[0.2em] uppercase">
+									Disciplina · Respeito · Foco · Evolução
+								</p>
+							</div>
+							<p class="text-ink/50 text-sm font-body leading-relaxed max-w-sm">
+								Escolha o horário que encaixa na sua rotina e venha experimentar gratuitamente.
+							</p>
+						</div>
+						<!-- Right: quick facts -->
+						<div class="grid grid-cols-2 gap-px bg-edge border border-edge">
+							@quickFact("4", "Dias de treino", "por semana")
+							@quickFact("3", "Modalidades", "Kickboxe · BJJ · Judô")
+						</div>
+					</div>
+				}
+			</section>
+			@atoms.DividerGold()
+			<!-- ── TODAY spotlight ──────────────────────────────────────────── -->
+			@todaySpotlight(todayDia())
+			@atoms.DividerGold()
+			<!-- ── Full week grid ───────────────────────────────────────────── -->
+			@weekGrid()
+			<!-- CTA -->
+			@atoms.ContrastSection("horarios-cta") {
+				@atoms.Container() {
+					<div class="relative overflow-hidden border border-gold/20 p-10 md:p-16 text-center space-y-6">
+						<div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-px bg-gold/60"></div>
+						<p class="font-accent text-xs tracking-[0.25em] uppercase text-gold">Primeira aula grátis</p>
+						<h2 class="font-display text-4xl md:text-5xl text-white uppercase leading-tight">
+							Faça parte da<br/><span class="text-gold">Arena VIP</span>
+						</h2>
+						<p class="text-white/45 text-sm font-body max-w-md mx-auto">
+							Onde a mente encontra o corpo. Venha experimentar qualquer modalidade sem compromisso.
+						</p>
+						<div class="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+							@atoms.ButtonLink("Agendar Aula Gratuita", "/#contato", "primary", "lg")
+							@atoms.ButtonLink("Falar pelo WhatsApp", "https://wa.me/351934551015", "secondary-light", "lg")
+						</div>
+					</div>
+				}
+			}
+		</main>
+		@components.Footer()
+	}
+}
+
+// ── Today spotlight ───────────────────────────────────────────────────────────
+
+templ todaySpotlight(hoje diaSemana) {
+	<section class="bg-contrast py-16 md:py-20">
+		@atoms.Container() {
+			<div class="space-y-8">
+				<!-- Label row -->
+				<div class="flex items-center gap-4">
+					<span class="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 px-4 py-1.5">
+						<span class="w-1.5 h-1.5 bg-gold rounded-full animate-pulse"></span>
+						<span class="font-accent text-[10px] font-semibold tracking-[0.3em] uppercase text-gold">Hoje</span>
+					</span>
+					<span class="font-display text-2xl md:text-3xl text-white/60 uppercase tracking-widest">{ hoje.Nome }</span>
+				</div>
+				if len(hoje.Aulas) > 0 {
+					<!-- Has classes today -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+						for _, a := range hoje.Aulas {
+							@todayCard(a)
+						}
+					</div>
+				} else {
+					<!-- Rest day -->
+					@restDay(nextDiaComAulas(hoje.Weekday))
+				}
+			</div>
+		}
+	</section>
+}
+
+templ todayCard(a aula) {
+	<div class="relative overflow-hidden border border-white/8 bg-white/[0.03] group hover:bg-white/[0.06] transition-colors duration-300">
+		<!-- Colour stripe on top -->
+		<div class={ "h-0.5 w-full " + a.Cor }></div>
+		<div class="p-6 space-y-4">
+			<!-- Time -->
+			<div class="flex items-end gap-2">
+				<span class="font-display text-5xl md:text-6xl text-white leading-none tracking-tight">{ a.Hora }</span>
+				<span class="font-accent text-xs text-white/30 tracking-widest uppercase pb-1.5">hrs</span>
+			</div>
+			<!-- Modality -->
+			<div class="space-y-1">
+				<p class={ "font-display text-2xl uppercase leading-none " + a.CorTexto }>{ a.Modalidade }</p>
+				<p class="text-xs font-accent tracking-widest uppercase text-white/40">
+					{ a.Papel } <span class="text-white/60">{ a.Instrutor }</span>
+				</p>
+			</div>
+		</div>
+	</div>
+}
+
+templ restDay(proximo diaSemana) {
+	<div class="flex flex-col md:flex-row md:items-center gap-8 py-4">
+		<div class="space-y-2">
+			<p class="font-display text-3xl md:text-4xl text-white/30 uppercase">Dia de descanso</p>
+			<p class="text-sm font-body text-white/25 max-w-sm">Recupera, descansa e volta mais forte. O tatame espera por ti.</p>
+		</div>
+		<div class="w-px h-16 bg-white/10 hidden md:block flex-shrink-0"></div>
+		<!-- Next training -->
+		<div class="space-y-1">
+			<p class="font-accent text-[10px] tracking-[0.3em] uppercase text-gold/60">Próximo treino</p>
+			<p class="font-display text-2xl text-white uppercase">{ proximo.Nome }</p>
+			<div class="flex flex-wrap gap-2 pt-1">
+				for _, a := range proximo.Aulas {
+					<span class={ "text-[10px] font-accent font-semibold tracking-widest uppercase px-2.5 py-1 border " + nextAulaBadge(a.Cor) }>
+						{ a.Hora } · { a.Modalidade }
+					</span>
+				}
+			</div>
+		</div>
+	</div>
+}
+
+func nextAulaBadge(cor string) string {
+	switch cor {
+	case "bg-gold":
+		return "border-gold/30 text-gold/70"
+	case "bg-accent":
+		return "border-accent/30 text-accent/70"
+	default:
+		return "border-blue-500/30 text-blue-400/70"
+	}
+}
+
+// ── Week grid ─────────────────────────────────────────────────────────────────
+
+templ weekGrid() {
+	<section class="py-20 md:py-28 bg-canvas" id="grade-semanal">
+		@atoms.Container() {
+			<div class="space-y-10">
+				<div class="flex items-end justify-between gap-4 flex-wrap">
+					<div class="space-y-2">
+						<p class="section-label">Semana completa</p>
+						<h2 class="font-display text-4xl md:text-5xl text-ink uppercase leading-none">
+							Grade <span class="text-gold">Semanal</span>
+						</h2>
+					</div>
+					<!-- Legend -->
+					<div class="flex flex-wrap items-center gap-5 pb-1">
+						@legendaItem("bg-gold", "Jiu-Jitsu")
+						@legendaItem("bg-accent", "Kickboxe")
+						@legendaItem("bg-blue-500", "Judô")
+					</div>
+				</div>
+				<!-- 6-column grid (Mon–Sat) — desktop; 2-col on mobile -->
+				<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 border-t border-l border-edge">
+					for _, dia := range semana[:6] {
+						@diaColuna(dia, isToday(dia.Weekday))
+					}
+				</div>
+				<!-- Caption -->
+				<p class="text-xs text-muted font-body text-center">
+					Horários sujeitos a alteração · Dúvidas? Fale connosco pelo <a href="https://wa.me/351934551015" class="text-gold hover:underline">WhatsApp</a>
+				</p>
+			</div>
+		}
+	</section>
+}
+
+templ diaColuna(d diaSemana, hoje bool) {
+	<div class={ "border-r border-b border-edge flex flex-col min-h-[220px] " + colunaBase(hoje, len(d.Aulas) > 0) }>
+		<!-- Day header -->
+		<div class={ "px-4 py-3 border-b border-edge " + headerBg(hoje, len(d.Aulas) > 0) }>
+			<p class={ "font-display text-xs md:text-sm uppercase tracking-widest leading-none " + headerText(hoje, len(d.Aulas) > 0) }>
+				{ d.Abrev }
+			</p>
+			if hoje {
+				<span class="mt-1 inline-block w-1 h-1 rounded-full bg-gold"></span>
+			}
+		</div>
+		<!-- Classes or rest indicator -->
+		<div class="flex flex-col gap-0 flex-1">
+			if len(d.Aulas) > 0 {
+				for _, a := range d.Aulas {
+					@aulaCell(a)
+				}
+			} else {
+				<div class="flex-1 flex items-center justify-center">
+					<span class="text-[10px] font-accent tracking-widest uppercase text-ink/15 rotate-0">—</span>
+				</div>
+			}
+		</div>
+	</div>
+}
+
+func colunaBase(hoje, active bool) string {
+	if hoje {
+		return "bg-gold/[0.03]"
+	}
+	if !active {
+		return "bg-canvas opacity-50"
+	}
+	return "bg-canvas"
+}
+
+func headerBg(hoje, active bool) string {
+	if hoje {
+		return "bg-gold/10"
+	}
+	if !active {
+		return "bg-surface"
+	}
+	return "bg-surface"
+}
+
+func headerText(hoje, active bool) string {
+	if hoje {
+		return "text-gold"
+	}
+	if !active {
+		return "text-ink/25"
+	}
+	return "text-ink/70"
+}
+
+templ aulaCell(a aula) {
+	<div class="relative group border-b border-edge last:border-b-0 px-3 py-3 flex flex-col gap-1 hover:bg-surface transition-colors duration-150">
+		<!-- Left accent bar -->
+		<div class={ "absolute left-0 top-0 bottom-0 w-0.5 " + a.Cor }></div>
+		<span class="font-display text-base md:text-lg text-ink leading-none pl-1">{ a.Hora }</span>
+		<span class={ "text-[9px] md:text-[10px] font-accent font-semibold tracking-widest uppercase leading-snug pl-1 " + a.CorTexto }>{ a.Modalidade }</span>
+		<span class="text-[9px] font-body text-muted leading-none pl-1 hidden sm:block">{ a.Instrutor }</span>
+	</div>
+}
+
+templ quickFact(valor, titulo, sub string) {
+	<div class="bg-canvas px-6 py-8 space-y-2">
+		<p class="font-display text-5xl md:text-6xl text-ink leading-none">{ valor }</p>
+		<p class="font-accent text-xs font-semibold tracking-widest uppercase text-gold">{ titulo }</p>
+		<p class="text-[11px] font-body text-muted leading-snug">{ sub }</p>
+	</div>
+}
+
+templ legendaItem(cor, label string) {
+	<div class="flex items-center gap-2">
+		<div class={ "w-2 h-2 flex-shrink-0 " + cor }></div>
+		<span class="text-xs font-accent tracking-wider uppercase text-muted">{ label }</span>
+	</div>
+}

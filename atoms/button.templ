@@ -1,0 +1,47 @@
+package atoms
+
+func btnBase() string {
+	return "inline-flex items-center justify-center font-accent font-semibold tracking-widest uppercase transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-canvas"
+}
+
+func btnVariant(variant string) string {
+	switch variant {
+	case "secondary":
+		return "border border-accent text-accent hover:bg-accent hover:text-white"
+	case "secondary-light":
+		return "border border-white/60 text-white hover:bg-white hover:text-contrast"
+	case "ghost":
+		return "text-white/70 hover:text-accent"
+	case "ghost-dark":
+		return "text-ink/60 hover:text-accent"
+	default: // primary
+		return "bg-accent text-white hover:bg-accent/85 active:bg-accent/95"
+	}
+}
+
+func btnSize(size string) string {
+	switch size {
+	case "sm":
+		return "px-4 py-2 text-xs"
+	case "lg":
+		return "px-8 py-4 text-sm"
+	default:
+		return "px-6 py-3 text-sm"
+	}
+}
+
+func BtnClasses(variant, size string) string {
+	return btnBase() + " " + btnVariant(variant) + " " + btnSize(size)
+}
+
+templ Button(text, variant, size string) {
+	<button type="button" class={ BtnClasses(variant, size) }>
+		{ text }
+	</button>
+}
+
+templ ButtonLink(text, href, variant, size string) {
+	<a href={ templ.SafeURL(href) } class={ BtnClasses(variant, size) }>
+		{ text }
+	</a>
+}
