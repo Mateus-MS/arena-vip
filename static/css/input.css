@@ -31,12 +31,16 @@
 @tailwind utilities;
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden; /* iOS Safari ignores overflow-x on body — must be on html */
+  }
 
   body {
     font-family: 'Inter', sans-serif;
     background-color: rgb(var(--canvas));
     color: rgb(var(--ink));
+    overflow-x: hidden;
   }
 
   ::selection {
