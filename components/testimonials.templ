@@ -3,24 +3,26 @@ package components
 import "arena-vip/atoms"
 
 type Testimonial struct {
-	Name     string
-	Belt     string
-	Role     string
-	Modality string
-	Duration string
-	Quote    string
-	Rating   int
+	Name       string
+	Belt       string
+	Role       string
+	Modality   string
+	Duration   string
+	Quote      string
+	Rating     int
+	Graduation int
 }
 
 var testimonials = []Testimonial{
 	{
-		Name:     "João Mendes",
-		Belt:     "Faixa Azul",
-		Role:     "Aluno há 2 anos",
-		Modality: "Brazilian Jiu-Jitsu",
-		Duration: "2 anos",
-		Quote:    "O melhor investimento que já fiz. A evolução não é só no tatame — você sai daqui mais disciplinado, mais focado e com uma mentalidade completamente diferente. Os professores são incríveis.",
-		Rating:   5,
+		Name:       "João Mendes",
+		Belt:       "Faixa Azul",
+		Role:       "Aluno há 2 anos",
+		Modality:   "Brazilian Jiu-Jitsu",
+		Duration:   "2 anos",
+		Quote:      "O melhor investimento que já fiz. A evolução não é só no tatame — você sai daqui mais disciplinado, mais focado e com uma mentalidade completamente diferente. Os professores são incríveis.",
+		Rating:     5,
+		Graduation: 2,
 	},
 	{
 		Name:     "Ana Lúcia",
@@ -32,13 +34,14 @@ var testimonials = []Testimonial{
 		Rating:   5,
 	},
 	{
-		Name:     "Pedro Rocha",
-		Belt:     "Faixa Roxa",
-		Role:     "Competidor ativo",
-		Modality: "Brazilian Jiu-Jitsu",
-		Duration: "3 anos",
-		Quote:    "Em 18 meses já estava competindo e ganhei minha primeira medalha. O nível técnico aqui é excepcional. Se você quer evoluir de verdade, esse é o lugar certo.",
-		Rating:   5,
+		Name:       "Pedro Rocha",
+		Belt:       "Faixa Roxa",
+		Role:       "Competidor ativo",
+		Modality:   "Brazilian Jiu-Jitsu",
+		Duration:   "3 anos",
+		Quote:      "Em 18 meses já estava competindo e ganhei minha primeira medalha. O nível técnico aqui é excepcional. Se você quer evoluir de verdade, esse é o lugar certo.",
+		Rating:     5,
+		Graduation: 1,
 	},
 	{
 		Name:     "Fernanda Lima",
@@ -137,7 +140,7 @@ templ testimonialFeatured(t Testimonial) {
 						<div class="text-xs text-muted mt-0.5">{ t.Role } · { t.Modality }</div>
 						if t.Belt != "" {
 							<div class="mt-1">
-								@atoms.BeltBadge(t.Belt)
+								@atoms.BeltVisual(t.Belt, t.Graduation)
 							</div>
 						}
 					</div>
@@ -216,7 +219,7 @@ templ testimonialCard(t Testimonial) {
 					<div class="text-xs text-muted">{ t.Role }</div>
 				</div>
 				if t.Belt != "" {
-					@atoms.BeltBadge(t.Belt)
+					@atoms.BeltVisual(t.Belt, t.Graduation)
 				}
 			</div>
 		</div>

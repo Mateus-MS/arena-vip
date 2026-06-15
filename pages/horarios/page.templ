@@ -61,8 +61,8 @@ var semana = []diaSemana{
 	{
 		Abrev: "QUI", Nome: "Quinta-Feira", Weekday: time.Thursday,
 		Aulas: []aula{
-			{Hora: "19:30", Modalidade: "Kickboxe", Papel: "Professor", Instrutor: "Ivan", Cor: "bg-accent", CorTexto: "text-accent"},
-			{Hora: "20:30", Modalidade: "Jiu-Jitsu", Papel: "Mestre", Instrutor: "Emerson", Cor: "bg-gold", CorTexto: "text-gold"},
+			{Hora: "19:00", Modalidade: "Jiu-Jitsu", Papel: "Mestre", Instrutor: "Emerson", Cor: "bg-gold", CorTexto: "text-gold"},
+			{Hora: "20:30", Modalidade: "Kickboxe", Papel: "Professor", Instrutor: "Ivan", Cor: "bg-accent", CorTexto: "text-accent"},
 		},
 	},
 	{
@@ -300,12 +300,12 @@ templ weekGrid() {
 templ diaColuna(d diaSemana, hoje bool) {
 	<div class={ "border-r border-b border-edge flex flex-col min-h-[220px] " + colunaBase(hoje, len(d.Aulas) > 0) }>
 		<!-- Day header -->
-		<div class={ "px-4 py-3 border-b border-edge " + headerBg(hoje, len(d.Aulas) > 0) }>
+		<div class={ "px-4 py-3 border-b border-edge flex items-center gap-2 " + headerBg(hoje, len(d.Aulas) > 0) }>
 			<p class={ "font-display text-xs md:text-sm uppercase tracking-widest leading-none " + headerText(hoje, len(d.Aulas) > 0) }>
 				{ d.Abrev }
 			</p>
 			if hoje {
-				<span class="mt-1 inline-block w-1 h-1 rounded-full bg-gold"></span>
+				<span class="block w-1 h-1 rounded-full bg-gold"></span>
 			}
 		</div>
 		<!-- Classes or rest indicator -->

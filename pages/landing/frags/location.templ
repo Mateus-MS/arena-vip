@@ -35,7 +35,7 @@ templ Location() {
 						<!-- Address details -->
 						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 							@locationCard("Endereço", "R. Indústria 547\n4780-481 Santo Tirso")
-							@locationCard("Estacionamento", "Estacionamento gratuito\ndisponível para alunos\ndurante as aulas")
+							<div></div>
 						</div>
 					</div>
 					<!-- Contact + Schedule -->
@@ -53,11 +53,13 @@ templ Location() {
 						<!-- Schedule -->
 						<div class="space-y-4">
 							<h4 class="font-accent text-xs font-semibold tracking-[0.2em] uppercase text-gold">Horário de Funcionamento</h4>
-							<div class="space-y-2">
-								for _, s := range schedule {
-									@scheduleRow(s)
-								}
-							</div>
+							<p class="text-sm text-ink/55 font-body">Confira os horários detalhados de todas as turmas e modalidades.</p>
+							<a href="/horarios" class="inline-flex items-center gap-2 text-xs font-accent font-semibold tracking-widest uppercase text-accent hover:gap-4 transition-all duration-200">
+								Ver horários completos
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+								</svg>
+							</a>
 						</div>
 						@atoms.DividerFull()
 						<!-- Social -->

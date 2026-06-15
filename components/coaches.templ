@@ -13,19 +13,21 @@ type Coach struct {
 	Bio          string
 	Photo        string
 	Achievements []string
+	Graduation   int
 }
 
 var coaches = []Coach{
 	{
-		Name:      "Carlos Andrade",
-		Role:      "Head Coach",
-		Belt:      "Faixa Preta",
-		BeltColor: "#BE1228",
-		ExpYears:  "15",
+		Name:       "Carlos Andrade",
+		Role:       "Head Coach",
+		Belt:       "Faixa Preta",
+		BeltColor:  "#BE1228",
+		ExpYears:   "15",
 		Experience: "15 anos",
-		Modality:  "Brazilian Jiu-Jitsu",
-		Photo:     "",
-		Bio:       "Formado pela linhagem Gracie, Carlos dedicou sua vida ao Jiu-Jitsu. Competidor ativo e instrutor nato, treinou centenas de alunos — do iniciante ao atleta de alto rendimento.",
+		Modality:   "Brazilian Jiu-Jitsu",
+		Photo:      "",
+		Bio:        "Formado pela linhagem Gracie, Carlos dedicou sua vida ao Jiu-Jitsu. Competidor ativo e instrutor nato, treinou centenas de alunos — do iniciante ao atleta de alto rendimento.",
+		Graduation: 2,
 		Achievements: []string{
 			"3x Campeão Estadual de BJJ",
 			"Medalha de Prata — Camp. Brasileiro",
@@ -34,15 +36,16 @@ var coaches = []Coach{
 		},
 	},
 	{
-		Name:      "Rafael Souza",
-		Role:      "Instrutor",
-		Belt:      "Faixa Preta",
-		BeltColor: "#BE1228",
-		ExpYears:  "12",
+		Name:       "Rafael Souza",
+		Role:       "Instrutor",
+		Belt:       "Faixa Preta",
+		BeltColor:  "#BE1228",
+		ExpYears:   "12",
 		Experience: "12 anos",
-		Modality:  "Kickboxing & BJJ",
-		Photo:     "",
-		Bio:       "Especialista em striking e no-gi, Rafael combina Kickboxing com a base do Jiu-Jitsu. Campeão e formador de campeões, suas aulas são de alto impacto.",
+		Modality:   "Kickboxing & BJJ",
+		Photo:      "",
+		Bio:        "Especialista em striking e no-gi, Rafael combina Kickboxing com a base do Jiu-Jitsu. Campeão e formador de campeões, suas aulas são de alto impacto.",
+		Graduation: 2,
 		Achievements: []string{
 			"2x Campeão Estadual de Kickboxing",
 			"Faixa Preta 1° Grau — BJJ",
@@ -51,15 +54,16 @@ var coaches = []Coach{
 		},
 	},
 	{
-		Name:      "Marco Ferreira",
-		Role:      "Instrutor",
-		Belt:      "Faixa Preta",
-		BeltColor: "#BE1228",
-		ExpYears:  "18",
+		Name:       "Marco Ferreira",
+		Role:       "Instrutor",
+		Belt:       "Faixa Preta",
+		BeltColor:  "#BE1228",
+		ExpYears:   "18",
 		Experience: "18 anos",
-		Modality:  "Judô & BJJ",
-		Photo:     "",
-		Bio:       "Judoca olímpico em formação, Marco traz a solidez das quedas e o trabalho de base. Sua metodologia com crianças e jovens é referência no estado.",
+		Modality:   "Judô & BJJ",
+		Photo:      "",
+		Bio:        "Judoca olímpico em formação, Marco traz a solidez das quedas e o trabalho de base. Sua metodologia com crianças e jovens é referência no estado.",
+		Graduation: 2,
 		Achievements: []string{
 			"Medalhista Pan-Americano de Judô",
 			"Representante Time Brasil — 2019",
@@ -131,18 +135,18 @@ func GetCoach(i int) Coach {
 }
 
 templ CoachCardAlt(c Coach) {
-	<div class="group relative border border-white/8 hover:border-gold/40 bg-white/3 transition-all duration-400 overflow-hidden flex flex-row">
+	<div class="group relative border border-white/8 hover:border-gold/40 bg-white/3 transition-all duration-400 overflow-hidden flex flex-col md:flex-row">
 		<!-- Gold left rail -->
 		<div class="absolute top-0 left-0 bottom-0 w-1 bg-gold/50 group-hover:bg-gold transition-colors duration-300 z-10"></div>
 		<!-- Photo -->
-		<div class="w-64 relative overflow-hidden border-r border-white/8 flex-shrink-0">
+		<div class="h-64 md:h-auto md:w-64 relative overflow-hidden border-b md:border-b-0 md:border-r border-white/8 flex-shrink-0">
 			@CoachPhoto(c.Photo, c.Name)
 		</div>
 		<!-- Content -->
 		<div class="p-6 flex flex-col flex-1 gap-4">
 			<!-- Identity -->
 			<div class="space-y-1.5">
-				@atoms.BeltBadge(c.Belt)
+				@atoms.BeltVisual(c.Belt, c.Graduation)
 				<h3 class="font-display text-2xl text-white uppercase leading-none tracking-tight">{ c.Name }</h3>
 				<div class="flex items-center gap-2 flex-wrap">
 					<span class="font-accent text-[10px] tracking-widest uppercase text-white/40">{ c.Role }</span>
@@ -185,7 +189,7 @@ templ coachCard(c Coach) {
 		<div class="pl-7 pr-6 pt-7 pb-0 space-y-5 flex-1 flex flex-col">
 			<!-- Identity -->
 			<div class="space-y-1 relative">
-				@atoms.BeltBadge(c.Belt)
+				@atoms.BeltVisual(c.Belt, c.Graduation)
 				<h3 class="font-display text-3xl md:text-4xl text-white uppercase leading-none tracking-tight mt-2">
 					{ c.Name }
 				</h3>

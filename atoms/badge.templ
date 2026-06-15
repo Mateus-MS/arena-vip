@@ -32,3 +32,52 @@ func beltClasses(belt string) string {
 		return "bg-accent/10 border border-accent/30 text-accent"
 	}
 }
+
+templ BeltVisual(belt string, graduation int) {
+	if belt != "" {
+		<div class={ "h-2.5 rounded-sm relative overflow-hidden " + beltVisualOuterClass(belt) }>
+			<div class={ "absolute right-0 top-0 bottom-0 flex items-stretch gap-px px-[2px] " + beltVisualTipClass(belt) }>
+				for i := 0; i < beltCapGraduation(belt, graduation); i++ {
+					<div class="w-[2px] flex-shrink-0 bg-white/90"></div>
+				}
+			</div>
+		</div>
+	}
+}
+
+// outer div: non-black belts use w-8, black belt uses w-12 to fit up to 8 stripes
+func beltVisualOuterClass(belt string) string {
+	switch belt {
+	case "Faixa Preta":
+		return "w-12 bg-ink border border-white/30"
+	case "Faixa Marrom":
+		return "w-12 bg-yellow-800 border border-white/30"
+	case "Faixa Roxa":
+		return "w-12 bg-purple-600 border border-white/30"
+	case "Faixa Azul":
+		return "w-12 bg-blue-500 border border-white/30"
+	default:
+		return "w-12 bg-white border border-black/25"
+	}
+}
+
+// tip div: w-4 (16px) fits 4 stripes; w-7 (28px) fits 8 stripes
+// stripe math: px-[2px]=4px total padding, w-[2px] stripes, gap-px gaps
+// 4 stripes: 4+8+3=15px < 16 ✓  |  8 stripes: 4+16+7=27px < 28 ✓
+func beltVisualTipClass(belt string) string {
+	if belt == "Faixa Preta" {
+		return "w-7 bg-accent mr-1"
+	}
+	return "w-4 bg-ink mr-1"
+}
+
+func beltCapGraduation(belt string, graduation int) int {
+	max := 4
+	if belt == "Faixa Preta" {
+		max = 8
+	}
+	if graduation > max {
+		return max
+	}
+	return graduation
+}
