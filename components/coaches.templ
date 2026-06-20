@@ -18,7 +18,7 @@ type Coach struct {
 
 var coaches = []Coach{
 	{
-		Name:       "Carlos Andrade",
+		Name:       "Emerson Mello",
 		Role:       "Head Coach",
 		Belt:       "Faixa Preta",
 		BeltColor:  "#BE1228",
@@ -26,48 +26,41 @@ var coaches = []Coach{
 		Experience: "15 anos",
 		Modality:   "Brazilian Jiu-Jitsu",
 		Photo:      "",
-		Bio:        "Formado pela linhagem Gracie, Carlos dedicou sua vida ao Jiu-Jitsu. Competidor ativo e instrutor nato, treinou centenas de alunos — do iniciante ao atleta de alto rendimento.",
+		Bio:        "Formado pela linhagem Gracie, Emerson dedicou sua vida ao Jiu-Jitsu. Competidor ativo e instrutor nato, treinou centenas de alunos — do iniciante ao atleta de alto rendimento.",
 		Graduation: 2,
 		Achievements: []string{
-			"3x Campeão Estadual de BJJ",
-			"Medalha de Prata — Camp. Brasileiro",
-			"Formou 4 faixas pretas",
 			"Instrutor certificado IBJJF",
 		},
 	},
 	{
-		Name:       "Rafael Souza",
+		Name:       "Ivan",
 		Role:       "Instrutor",
-		Belt:       "Faixa Preta",
-		BeltColor:  "#BE1228",
+		Belt:       "",
+		BeltColor:  "",
 		ExpYears:   "12",
 		Experience: "12 anos",
-		Modality:   "Kickboxing & BJJ",
+		Modality:   "Kickboxing",
 		Photo:      "",
-		Bio:        "Especialista em striking e no-gi, Rafael combina Kickboxing com a base do Jiu-Jitsu. Campeão e formador de campeões, suas aulas são de alto impacto.",
-		Graduation: 2,
+		Bio:        "Especialista em striking e no-gi, Ivan combina Kickboxing com a base do Jiu-Jitsu. Campeão e formador de campeões, suas aulas são de alto impacto.",
+		Graduation: 0,
 		Achievements: []string{
 			"2x Campeão Estadual de Kickboxing",
-			"Faixa Preta 1° Grau — BJJ",
-			"Professor certificado CBKB",
 			"Atleta de MMA profissional",
 		},
 	},
 	{
-		Name:       "Marco Ferreira",
+		Name:       "Elvis",
 		Role:       "Instrutor",
 		Belt:       "Faixa Preta",
 		BeltColor:  "#BE1228",
 		ExpYears:   "18",
 		Experience: "18 anos",
-		Modality:   "Judô & BJJ",
+		Modality:   "Judô",
 		Photo:      "",
-		Bio:        "Judoca olímpico em formação, Marco traz a solidez das quedas e o trabalho de base. Sua metodologia com crianças e jovens é referência no estado.",
-		Graduation: 2,
+		Bio:        "Judoca olímpico em formação, Elvis traz a solidez das quedas e o trabalho de base. Sua metodologia com crianças e jovens é referência no estado.",
+		Graduation: 0,
 		Achievements: []string{
 			"Medalhista Pan-Americano de Judô",
-			"Representante Time Brasil — 2019",
-			"Faixa Roxa — Brazilian Jiu-Jitsu",
 			"Certificado Kodokan — Japão",
 		},
 	},
@@ -132,6 +125,17 @@ func GetCoach(i int) Coach {
 		return coaches[i]
 	}
 	return coaches[0]
+}
+
+func GetHeadCoach() Coach {
+	return coaches[0]
+}
+
+func GetInstructors() []Coach {
+	if len(coaches) <= 1 {
+		return nil
+	}
+	return coaches[1:]
 }
 
 templ CoachCardAlt(c Coach) {

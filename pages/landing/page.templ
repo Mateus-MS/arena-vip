@@ -2,6 +2,7 @@ package landing
 
 import (
 	"arena-vip/app"
+	"arena-vip/app/config"
 	"arena-vip/components"
 	"arena-vip/pages/landing/frags"
 	"arena-vip/templates"
@@ -24,7 +25,9 @@ templ Page() {
 			@frags.Modalities()
 			@components.Coaches(true)
 			@components.Testimonials(true)
-			@components.Competitions(true)
+			if config.ResultadosEnabled() {
+				@components.Competitions(true)
+			}
 			@frags.About()
 			@frags.Join()
 			@components.Contact()

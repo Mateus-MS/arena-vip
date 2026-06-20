@@ -57,76 +57,7 @@ templ Page() {
 				<div class="h-8 bg-gradient-to-b from-transparent to-contrast"></div>
 			</section>
 			<!-- Featured head coach -->
-			@atoms.ContrastSection("head-coach") {
-				@atoms.Container() {
-					<div class="grid grid-cols-1 lg:grid-cols-3 gap-0 border border-white/8 overflow-hidden">
-						<!-- Photo -->
-						<div class="h-72 lg:h-auto lg:min-h-[460px] relative overflow-hidden border-b lg:border-b-0 lg:border-r border-white/8">
-							@components.CoachPhoto("", "Carlos Andrade")
-						</div>
-						<!-- Text: identity + details side by side -->
-						<div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-0">
-							<!-- Identity -->
-							<div class="relative bg-white/3 p-10 flex flex-col justify-between overflow-hidden border-b md:border-b-0 md:border-r border-white/8">
-								<div class="absolute bottom-0 right-0 font-display text-[12rem] leading-none text-white/4 select-none pointer-events-none translate-y-6 translate-x-4">15</div>
-								<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-accent"></div>
-								<div class="space-y-4 relative pl-2">
-									@atoms.BeltVisual("Faixa Preta", 2)
-									<div>
-										<div class="font-accent text-[10px] tracking-[0.3em] uppercase text-white/35 mb-2">Head Coach · Brazilian Jiu-Jitsu</div>
-										<h2 class="font-display text-5xl md:text-6xl text-white uppercase leading-none">Carlos<br/>Andrade</h2>
-									</div>
-								</div>
-								<div class="relative pl-2 space-y-1 mt-8">
-									<div class="flex items-center gap-2">
-										<span class="font-display text-3xl text-gold">15</span>
-										<span class="text-xs font-accent tracking-widest uppercase text-white/35">anos de experiência</span>
-									</div>
-									<div class="flex items-center gap-2">
-										<span class="font-display text-3xl text-gold">500+</span>
-										<span class="text-xs font-accent tracking-widest uppercase text-white/35">alunos treinados</span>
-									</div>
-								</div>
-							</div>
-							<!-- Details -->
-							<div class="p-10 flex flex-col justify-between gap-8">
-								<div class="space-y-5">
-									<p class="text-white/60 text-base font-body leading-relaxed">
-										Formado pela linhagem Gracie, Carlos dedicou sua vida ao Jiu-Jitsu Brasileiro. Competidor ativo e instrutor nato, treinou centenas de alunos de todos os níveis — do iniciante absoluto ao atleta de alto rendimento que representa a Arena VIP em campeonatos nacionais.
-									</p>
-									<p class="text-white/40 text-sm font-body leading-relaxed">
-										Sua metodologia une o conhecimento técnico da linhagem Gracie com uma abordagem pedagógica moderna, adaptada para cada perfil de aluno. Professor das turmas de adultos, competição e formação de instrutores.
-									</p>
-								</div>
-								<div class="space-y-4">
-									<div class="text-[10px] font-accent tracking-[0.2em] uppercase text-gold/70">Conquistas</div>
-									<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-										<div class="flex items-start gap-2.5">
-											<div class="w-1 h-1 rounded-full bg-accent mt-1.5 flex-shrink-0"></div>
-											<span class="text-xs text-white/50">3x Campeão Estadual de BJJ</span>
-										</div>
-										<div class="flex items-start gap-2.5">
-											<div class="w-1 h-1 rounded-full bg-accent mt-1.5 flex-shrink-0"></div>
-											<span class="text-xs text-white/50">Medalha de Prata — Camp. Brasileiro</span>
-										</div>
-										<div class="flex items-start gap-2.5">
-											<div class="w-1 h-1 rounded-full bg-accent mt-1.5 flex-shrink-0"></div>
-											<span class="text-xs text-white/50">Formou 4 faixas pretas</span>
-										</div>
-										<div class="flex items-start gap-2.5">
-											<div class="w-1 h-1 rounded-full bg-accent mt-1.5 flex-shrink-0"></div>
-											<span class="text-xs text-white/50">Instrutor certificado IBJJF</span>
-										</div>
-									</div>
-									<div class="pt-2">
-										@atoms.ButtonLink("Agendar aula com Carlos", "/#contato", "primary", "sm")
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				}
-			}
+			@headCoachSection(components.GetHeadCoach())
 			<!-- Other coaches -->
 			@atoms.ContrastSection("instrutores") {
 				@atoms.Container() {
@@ -136,8 +67,9 @@ templ Page() {
 							<span class="font-accent text-xs tracking-[0.25em] uppercase text-gold/70">Instrutores</span>
 						</div>
 						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-							@components.CoachCardAlt(components.GetCoach(1))
-							@components.CoachCardAlt(components.GetCoach(2))
+							for _, c := range components.GetInstructors() {
+								@components.CoachCardAlt(c)
+							}
 						</div>
 					</div>
 				}
@@ -145,5 +77,57 @@ templ Page() {
 			@components.Contact()
 		</main>
 		@components.Footer()
+	}
+}
+
+templ headCoachSection(c components.Coach) {
+	@atoms.ContrastSection("head-coach") {
+		@atoms.Container() {
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-0 border border-white/8 overflow-hidden">
+				<!-- Photo -->
+				<div class="h-72 lg:h-auto lg:min-h-[460px] relative overflow-hidden border-b lg:border-b-0 lg:border-r border-white/8">
+					@components.CoachPhoto(c.Photo, c.Name)
+				</div>
+				<!-- Text: identity + details side by side -->
+				<div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-0">
+					<!-- Identity -->
+					<div class="relative bg-white/3 p-10 flex flex-col justify-between overflow-hidden border-b md:border-b-0 md:border-r border-white/8">
+						<div class="absolute bottom-0 right-0 font-display text-[12rem] leading-none text-white/4 select-none pointer-events-none translate-y-6 translate-x-4">{ c.ExpYears }</div>
+						<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-accent"></div>
+						<div class="space-y-4 relative pl-2">
+							@atoms.BeltVisual(c.Belt, c.Graduation)
+							<div>
+								<div class="font-accent text-[10px] tracking-[0.3em] uppercase text-white/35 mb-2">{ c.Role } · { c.Modality }</div>
+								<h2 class="font-display text-5xl md:text-6xl text-white uppercase leading-none">{ c.Name }</h2>
+							</div>
+						</div>
+						<div class="relative pl-2 space-y-1 mt-8">
+							<div class="flex items-center gap-2">
+								<span class="font-display text-3xl text-gold">{ c.ExpYears }</span>
+								<span class="text-xs font-accent tracking-widest uppercase text-white/35">anos de experiência</span>
+							</div>
+						</div>
+					</div>
+					<!-- Details -->
+					<div class="p-10 flex flex-col justify-between gap-8">
+						<p class="text-white/60 text-base font-body leading-relaxed">{ c.Bio }</p>
+						<div class="space-y-4">
+							<div class="text-[10px] font-accent tracking-[0.2em] uppercase text-gold/70">Conquistas</div>
+							<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+								for _, a := range c.Achievements {
+									<div class="flex items-start gap-2.5">
+										<div class="w-1 h-1 rounded-full bg-accent mt-1.5 flex-shrink-0"></div>
+										<span class="text-xs text-white/50">{ a }</span>
+									</div>
+								}
+							</div>
+							<div class="pt-2">
+								@atoms.ButtonLink("Agendar aula com "+c.Name, "/#contato", "primary", "sm")
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
 	}
 }

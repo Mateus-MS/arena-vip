@@ -21,15 +21,21 @@ templ BeltBadge(belt string) {
 func beltClasses(belt string) string {
 	switch belt {
 	case "Faixa Preta":
-		return "bg-neutral-900 border border-white/20 text-white"
+		return "bg-neutral-900 text-white"
 	case "Faixa Marrom":
-		return "bg-amber-900/40 border border-amber-700/40 text-amber-700"
+		return "bg-amber-900/40 text-amber-700"
 	case "Faixa Roxa":
-		return "bg-purple-100 border border-purple-400/40 text-purple-700"
+		return "bg-purple-100 text-purple-700"
 	case "Faixa Azul":
-		return "bg-blue-100 border border-blue-400/40 text-blue-700"
+		return "bg-blue-100 text-blue-700"
+	case "Faixa Verde":
+		return "bg-green-100 text-green-700"
+	case "Faixa Amarela":
+		return "bg-yellow-100 text-yellow-700"
+	case "Faixa Laranja":
+		return "bg-orange-100 text-orange-700"
 	default:
-		return "bg-accent/10 border border-accent/30 text-accent"
+		return "bg-accent/10 text-accent"
 	}
 }
 
@@ -56,6 +62,12 @@ func beltVisualOuterClass(belt string) string {
 		return "w-12 bg-purple-600 border border-white/30"
 	case "Faixa Azul":
 		return "w-12 bg-blue-500 border border-white/30"
+	case "Faixa Verde":
+		return "w-12 bg-green-500 border border-white/30"
+	case "Faixa Amarela":
+		return "w-12 bg-yellow-400 border border-black/20"
+	case "Faixa Laranja":
+		return "w-12 bg-orange-400 border border-white/30"
 	default:
 		return "w-12 bg-white border border-black/25"
 	}

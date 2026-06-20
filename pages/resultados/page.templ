@@ -2,15 +2,25 @@ package resultados
 
 import (
 	"arena-vip/app"
+	"arena-vip/app/config"
 	"arena-vip/atoms"
 	"arena-vip/components"
 	"arena-vip/pages/resultados/frags"
 	"arena-vip/templates"
 	"arena-vip/utils"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func init() {
-	app.GetInstance().Router.GET("/resultados", utils.Render(Page()))
+	app.GetInstance().Router.GET("/resultados", func(c *gin.Context) {
+		if !config.ResultadosEnabled() {
+			c.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+		utils.Render(Page())(c)
+	})
 }
 
 templ Page() {

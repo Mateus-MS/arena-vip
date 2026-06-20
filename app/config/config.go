@@ -7,6 +7,11 @@ func ShopEnabled() bool {
 	return os.Getenv("SHOP_ENABLED") == "true"
 }
 
+// ResultadosEnabled returns true when RESULTADOS_ENABLED=true in the environment.
+func ResultadosEnabled() bool {
+	return os.Getenv("RESULTADOS_ENABLED") == "true"
+}
+
 // MapsAPIKey returns the Google Maps JavaScript API key from MAPS_API_KEY.
 func MapsAPIKey() string {
 	return os.Getenv("MAPS_API_KEY")

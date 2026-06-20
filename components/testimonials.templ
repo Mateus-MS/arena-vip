@@ -11,45 +11,67 @@ type Testimonial struct {
 	Quote      string
 	Rating     int
 	Graduation int
+	Featured   bool
 }
 
 var testimonials = []Testimonial{
 	{
-		Name:       "João Mendes",
-		Belt:       "Faixa Azul",
+		Name:       "Robson Ferreira",
+		Belt:       "Faixa Roxa",
 		Role:       "Aluno há 2 anos",
 		Modality:   "Brazilian Jiu-Jitsu",
 		Duration:   "2 anos",
-		Quote:      "O melhor investimento que já fiz. A evolução não é só no tatame — você sai daqui mais disciplinado, mais focado e com uma mentalidade completamente diferente. Os professores são incríveis.",
+		Quote:      "Ossssssa! Graduado faixa roxa pelo Sensei Emerson 🥋. Sem sombra de duvidas a academia e mais que 5 estrelas, não apenas pelos valores e aprendizados passados, como também pelo ambiente. Independentemente do grau de cada aluno, todos se respeitam. E por ultimo e não menos importante, todo treino é extremamente intenso, profissional e produtivo. Sem contar que também pode contar com aulas de Judo ministradas pelo Sensei Elvis e kickboxing pelo professor Ivan.",
 		Rating:     5,
-		Graduation: 2,
+		Graduation: 0,
 	},
 	{
-		Name:     "Ana Lúcia",
-		Belt:     "",
-		Role:     "Mãe de aluno",
-		Modality: "Judô Kids",
+		Name:     "Gonçalo Avidos Almeida",
+		Belt:     "Faixa Amarela",	
+		Role:     "Aluno há 2 anos",
+		Modality: "Judô",
 		Duration: "8 meses",
-		Quote:    "Meu filho chegou sem se encaixar em lugar nenhum. Em 6 meses de Judô ele ganhou confiança, fez amigos e ficou entre os melhores da turma na escola. A academia mudou a vida da nossa família.",
+		Quote:    "Excelente academia faz 1 ano e meio que lá treino. Treinos intensos com muita aplicação prática do que é aprendido. Todos os nossos tutores da academia são excelentes tanto como pessoas, como professores. Não podia recomendar mais",
 		Rating:   5,
 	},
 	{
-		Name:       "Pedro Rocha",
-		Belt:       "Faixa Roxa",
-		Role:       "Competidor ativo",
+		Name:       "Miguel Einstein",
+		Featured:   true,
+		Belt:       "Faixa Branca",
+		Role:       "Aluno há 2 anos",
 		Modality:   "Brazilian Jiu-Jitsu",
-		Duration:   "3 anos",
-		Quote:      "Em 18 meses já estava competindo e ganhei minha primeira medalha. O nível técnico aqui é excepcional. Se você quer evoluir de verdade, esse é o lugar certo.",
+		Duration:   "2 anos",
+		Quote:      "Gosto muito de treinar na Arena VIP. O mestre explica bem e corrige a postura, o que ajuda bastante na evolução. Ambiente tranquilo, sem confusão, e os horários são cumpridos. Vale a pena.",
 		Rating:     5,
 		Graduation: 1,
 	},
 	{
-		Name:     "Fernanda Lima",
-		Belt:     "",
-		Role:     "Aluna de Kickboxing",
-		Modality: "Kickboxing",
-		Duration: "4 meses",
-		Quote:    "Comecei pelo condicionamento físico e me apaixonei. Perdi 12kg em 4 meses e hoje sou uma pessoa completamente diferente. O professor Rafael é fenomenal.",
+		Name:       "Antônio Leal",
+		Belt:       "Faixa Branca",
+		Role:       "Aluno há 2 anos",
+		Modality:   "Brazilian Jiu-Jitsu",
+		Duration:   "2 anos",
+		Quote:      "Treinos impecáveis, foçados na evolução, altamente produtivos, além, dos alunos serem ótimos.",
+		Rating:     5,
+		Graduation: 1,
+	},
+	{
+		Name:     "Keba Reserva",
+		Belt:     "Faixa Branca",
+		Role:     "Aluna há 2 anos",
+		Modality: "Brazilian Jiu-Jitsu",
+		Duration: "2 anos",
+		Quote:    "Espaço limpo e acolhedor!",
+		Rating:   5,
+	},
+	{
+		Name:     "Guilherme Villas boas",
+		Belt:     "Faixa Azul",
+		Role:     "Aluno há 2 anos",
+		Modality: "Brazilian Jiu-Jitsu",
+		Duration: "2 anos",
+		Quote:    "Excelente espaço, ótimo comprometimento, pessoas excepcionais no que fazem. Local acolhedor e ótimo para aprender artes marciais.",
+		Graduation: 2,
 		Rating:   5,
 	},
 }
@@ -185,6 +207,25 @@ templ testimonialCompact(t Testimonial) {
 
 func GetTestimonials() []Testimonial {
 	return testimonials
+}
+
+func GetFeaturedTestimonial() Testimonial {
+	for _, t := range testimonials {
+		if t.Featured {
+			return t
+		}
+	}
+	return testimonials[0]
+}
+
+func GetGridTestimonials() []Testimonial {
+	var result []Testimonial
+	for _, t := range testimonials {
+		if !t.Featured {
+			result = append(result, t)
+		}
+	}
+	return result
 }
 
 templ TestimonialCardPublic(t Testimonial) {

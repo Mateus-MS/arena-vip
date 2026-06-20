@@ -47,7 +47,9 @@ templ Footer() {
 					<ul class="space-y-3">
 						<li><a href="/#sobre" class="text-sm text-white/50 hover:text-accent transition-colors duration-200">Sobre Nós</a></li>
 						<li><a href="/professores" class="text-sm text-white/50 hover:text-accent transition-colors duration-200">Professores</a></li>
-						<li><a href="/resultados" class="text-sm text-white/50 hover:text-accent transition-colors duration-200">Competições</a></li>
+						if config.ResultadosEnabled() {
+							<li><a href="/resultados" class="text-sm text-white/50 hover:text-accent transition-colors duration-200">Competições</a></li>
+						}
 						<li><a href="/faq" class="text-sm text-white/50 hover:text-accent transition-colors duration-200">FAQ</a></li>
 						<li><a href="/#localizacao" class="text-sm text-white/50 hover:text-accent transition-colors duration-200">Localização</a></li>
 							if config.ShopEnabled() {
